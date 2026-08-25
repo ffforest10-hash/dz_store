@@ -298,14 +298,10 @@
                 <details class="glass p-5 rounded-2xl cursor-pointer group">
                     <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fab fa-whatsapp w-5 text-[#d9777f] mr-2"></i> Pengaturan WhatsApp</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
                     <div class="mt-4 space-y-3 cursor-auto border-t border-gray-100 pt-4">
-                        <p class="text-xs text-gray-500 mb-2">Pesan ini akan dikirim otomatis saat tombol <b>Kirim Pesan</b> di layar terakhir diklik.</p>
                         <div>
                             <label class="block text-xs font-medium mb-1">Nomor WhatsApp Tujuan</label>
                             <input type="text" id="inputWaNumber" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-[#d9777f]" placeholder="+62 8xx-xxxx-xxxx">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium mb-1">Isi Pesan WhatsApp</label>
-                            <textarea id="inputWaMessage" rows="3" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-[#d9777f]" placeholder="Pesan romantis..."></textarea>
+                            <p class="text-[10px] text-gray-500 mt-1">Pastikan menggunakan kode negara (contoh: +62)</p>
                         </div>
                     </div>
                 </details>
@@ -330,6 +326,24 @@
             <p id="alertMessage" class="text-gray-600 text-lg mb-8 leading-relaxed">Isi pesan...</p>
             <button onclick="closeAlert()" class="btn-primary font-semibold py-3 px-10 rounded-full w-full">
                 <span id="alertBtnText">Tutup</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- MODAL KIRIM WHATSAPP DINAMIS -->
+    <div id="waModal" class="fixed inset-0 z-[120] flex items-center justify-center bg-white/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="glass-panel p-8 md:p-10 rounded-3xl shadow-2xl text-center max-w-sm w-[90%] mx-4 transform scale-95 transition-transform duration-400 border border-white relative">
+            <button onclick="closeWaModal()" class="absolute top-4 right-4 text-gray-400 hover:text-[#d9777f] transition-colors">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+            <i class="fab fa-whatsapp text-5xl text-green-500 mb-4 drop-shadow-md"></i>
+            <h3 class="text-2xl font-bold text-gray-800 mb-2 lux-font italic">Balas Pesanku</h3>
+            <p class="text-gray-500 text-sm mb-6">Ketik pesan balasan untukku di bawah ini ya sayang ❤️</p>
+            
+            <textarea id="userWaMessage" rows="4" class="w-full bg-white border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-[#d9777f] focus:ring-2 focus:ring-rose-100 text-gray-700 mb-6 placeholder-gray-300" placeholder="Ketik pesanmu di sini..."></textarea>
+            
+            <button onclick="sendDynamicWhatsApp()" class="btn-primary font-semibold py-3 px-8 rounded-full w-full flex justify-center items-center">
+                Kirim via WA <i class="fas fa-paper-plane ml-2"></i>
             </button>
         </div>
     </div>
@@ -372,7 +386,7 @@
     <div id="startScreen" class="flex flex-col items-center justify-center page-transition hidden-page">
         <div class="text-center cursor-pointer glass p-12 rounded-[3rem] hover:scale-105 transition-transform duration-500" onclick="openSurprise()">
             <div class="relative w-40 h-40 mx-auto mb-8 flex justify-center items-center">
-                <!-- Ikon Kado Pink Solid seperti referensi -->
+                <!-- Ikon Kado Pink Solid -->
                 <i class="fas fa-gift text-[8rem] text-[#ec4899] drop-shadow-lg hover:rotate-3 transition-transform duration-300"></i>
             </div>
             <h1 class="lux-font italic text-3xl md:text-4xl text-gray-700 mb-4">A Special Gift for You</h1>
@@ -398,30 +412,28 @@
         </div>
     </div>
 
-    <!-- SCREEN 4: Game -->
+    <!-- SCREEN 4: Game (Hanya Lanjut Jika Benar) -->
     <div id="gameScreen" class="flex flex-col items-center justify-center p-6 page-transition hidden-page">
         <div class="glass p-8 md:p-12 rounded-[3rem] max-w-2xl w-full text-center relative z-10 my-auto">
             <h1 id="displayGameTitle" class="lux-font italic text-3xl text-[#d9777f] mb-3">Tebak Game</h1>
-            <p class="text-gray-400 font-medium mb-10 text-sm">Pilih dengan hatimu...</p>
+            <p class="text-gray-400 font-medium mb-10 text-sm">Pilih dengan hatimu... 👀</p>
             
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-12 mb-10">
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-12 mb-6">
+                <!-- Foto Salah -->
                 <div class="cursor-pointer group flex flex-col items-center" onclick="handleWrong()">
                     <div class="relative w-40 h-40 mb-3">
                         <img id="displayPhotoWrong" src="" class="w-full h-full object-cover rounded-full border-[4px] border-white shadow-lg group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100 filter grayscale group-hover:grayscale-0">
                     </div>
                 </div>
                 <div class="text-[#d9777f] font-light text-2xl lux-font italic opacity-50">vs</div>
+                <!-- Foto Benar (Tombol Lanjut Dipicu Dari Sini) -->
                 <div class="cursor-pointer group flex flex-col items-center" onclick="handleCorrect()">
                     <div class="relative w-40 h-40 mb-3">
                         <img id="displayPhotoCorrect" src="" class="w-full h-full object-cover rounded-full border-[4px] border-white shadow-lg group-hover:scale-105 transition-transform duration-300">
                     </div>
                 </div>
             </div>
-            
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                <button id="btnQuit2" class="runaway-btn glass-btn text-gray-500 font-semibold py-3.5 px-8 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase" onmouseover="moveBtn(this, 'gameScreen')" ontouchstart="moveBtn(this, 'gameScreen')">Quit</button>
-                <button onclick="switchScreen('gameScreen', 'menuScreen')" class="btn-primary py-3.5 px-10 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase font-semibold flex justify-center items-center">Lanjut <i class="fas fa-chevron-right ml-3 text-xs"></i></button>
-            </div>
+            <p class="text-xs text-[#d9777f]/70 italic mt-4">*Klik foto yang benar untuk melanjutkan</p>
         </div>
     </div>
 
@@ -463,8 +475,8 @@
 
             </div>
 
-            <!-- Tombol Kirim Pesan (WhatsApp) - Awalnya disabled/terkunci -->
-            <button id="waButton" class="bg-gray-300 text-gray-500 cursor-not-allowed font-semibold py-4 px-10 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase transition-all duration-500 shadow-md flex justify-center items-center mx-auto" onclick="sendWhatsApp()">
+            <!-- Tombol Kirim Pesan (WhatsApp) - Membuka Modal Input -->
+            <button id="waButton" class="bg-gray-300 text-gray-500 cursor-not-allowed font-semibold py-4 px-10 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase transition-all duration-500 shadow-md flex justify-center items-center mx-auto" onclick="openWaModal()">
                 Buka 3 kotak dulu ya... <i class="fas fa-lock ml-3"></i>
             </button>
         </div>
@@ -544,7 +556,11 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
         // --- DATA DEFAULT MEWAH & ELEGAN ---
         const defaultData = {
             pin: '04092007',
@@ -560,7 +576,6 @@
             msgWrong: 'Oops, sepertinya kamu salah pilih. 🙈',
             msgCorrect: 'Pilihan yang tepat! Aku padamu sayang. 🥰',
 
-            // Gambar Card Menu 
             menuLoveImg: 'https://images.unsplash.com/photo-1518192620713-fb1ecab73552?auto=format&fit=crop&w=400&q=80',
             menuBouquetImg: 'https://images.unsplash.com/photo-1582791694776-905e9ce6dcc0?auto=format&fit=crop&w=400&q=80',
             menuAlbumImg: 'https://images.unsplash.com/photo-1526178613552-2b45c6c302f0?auto=format&fit=crop&w=400&q=80',
@@ -577,18 +592,93 @@
             album5: 'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=400&q=80',
             album6: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=400&q=80',
 
-            // Data WhatsApp Baru
-            waNumber: '+62 821-2156-0912',
-            waMessage: 'Hai sayang! Makasih yaa kejutan web ulang tahunnya yang cantik banget. I love you so much! 💖🥰'
+            waNumber: '+62 821-2156-0912'
         };
 
+        let appData = { ...defaultData };
         let currentPin = '';
         const MAX_PIN_LENGTH = 8;
-        let appData = { ...defaultData };
-        
-        // Status menu (Untuk unlock tombol WA)
         let menuStatus = { love: false, bouquet: false, album: false };
 
+        // --- FIREBASE CLOUD SETUP ---
+        let db, auth;
+        let isFirebaseReady = false;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'birthday-app';
+
+        if (typeof __firebase_config !== 'undefined') {
+            const firebaseConfig = JSON.parse(__firebase_config);
+            const app = initializeApp(firebaseConfig);
+            auth = getAuth(app);
+            db = getFirestore(app);
+            
+            const initAuth = async () => {
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            };
+            initAuth();
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    isFirebaseReady = true;
+                    loadSettingsFromCloud();
+                }
+            });
+        } else {
+            loadSettingsLocal();
+        }
+
+        function getCloudDocRef() {
+            return doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'config');
+        }
+
+        async function loadSettingsFromCloud() {
+            if (!isFirebaseReady) return;
+            try {
+                const docSnap = await getDoc(getCloudDocRef());
+                if (docSnap.exists()) {
+                    appData = { ...defaultData, ...docSnap.data() };
+                } else {
+                    appData = { ...defaultData };
+                }
+                populateForm();
+                applySettings();
+            } catch (error) {
+                console.error("Gagal memuat data dari cloud:", error);
+                loadSettingsLocal();
+            }
+        }
+
+        async function saveSettingsToCloud() {
+            if (!isFirebaseReady) {
+                saveSettingsLocal();
+                return;
+            }
+            try {
+                await setDoc(getCloudDocRef(), appData);
+                window.showCustomAlert('☁️', 'Tersimpan!', 'Pengaturan berhasil disimpan secara publik! Pacar kamu sekarang bisa melihat perubahannya.', 'OK');
+            } catch (error) {
+                console.error("Gagal menyimpan ke cloud:", error);
+                window.showCustomAlert('❌', 'Gagal', 'Gagal menyimpan ke server.', 'Tutup');
+                saveSettingsLocal();
+            }
+        }
+
+        function loadSettingsLocal() {
+            const savedData = localStorage.getItem('birthdayPremiumDataV5');
+            appData = savedData ? { ...defaultData, ...JSON.parse(savedData) } : { ...defaultData };
+            populateForm();
+            applySettings();
+        }
+
+        function saveSettingsLocal() {
+            localStorage.setItem('birthdayPremiumDataV5', JSON.stringify(appData));
+            window.showCustomAlert('💾', 'Tersimpan!', 'Data disimpan sementara di browser ini (Cloud tidak tersedia).', 'Tutup');
+        }
+
+        // --- CORE FUNCTIONS ---
         function convertDriveLink(url) {
             if (!url) return '';
             const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)\//) || url.match(/id=([a-zA-Z0-9_-]+)/);
@@ -596,39 +686,28 @@
             return url;
         }
 
-        function loadSettings() {
-            const savedData = localStorage.getItem('birthdayPremiumDataV4');
-            appData = savedData ? { ...defaultData, ...JSON.parse(savedData) } : { ...defaultData };
-
+        function populateForm() {
             document.getElementById('inputPin').value = appData.pin;
             document.getElementById('inputWrongPinMsg').value = appData.wrongPinMsg;
             document.getElementById('inputMusic').value = appData.music;
             document.getElementById('inputPhoto').value = appData.photo;
             document.getElementById('inputTitle').value = appData.title;
             document.getElementById('inputMessage').value = appData.message;
-            
             document.getElementById('inputGameTitle').value = appData.gameTitle;
             document.getElementById('inputPhotoWrong').value = appData.photoWrong;
             document.getElementById('inputMsgWrong').value = appData.msgWrong;
             document.getElementById('inputPhotoCorrect').value = appData.photoCorrect;
             document.getElementById('inputMsgCorrect').value = appData.msgCorrect;
-
             document.getElementById('inputMenuLoveImg').value = appData.menuLoveImg;
             document.getElementById('inputMenuBouquetImg').value = appData.menuBouquetImg;
             document.getElementById('inputMenuAlbumImg').value = appData.menuAlbumImg;
-
             document.getElementById('inputLoveMsg').value = appData.loveMsg;
             document.getElementById('inputBouquetImg').value = appData.bouquetImg;
             document.getElementById('inputBouquetMsg').value = appData.bouquetMsg;
-
             document.getElementById('inputWaNumber').value = appData.waNumber;
-            document.getElementById('inputWaMessage').value = appData.waMessage;
-
             for(let i=1; i<=6; i++) {
                 document.getElementById(`inputAlbum${i}`).value = appData[`album${i}`];
             }
-
-            applySettings();
         }
 
         function applySettings() {
@@ -636,26 +715,22 @@
             document.getElementById('displayPhoto').src = convertDriveLink(appData.photo);
             document.getElementById('displayTitle').textContent = appData.title;
             document.getElementById('displayMessage').textContent = appData.message;
-            
             document.getElementById('displayGameTitle').textContent = appData.gameTitle;
             document.getElementById('displayPhotoWrong').src = convertDriveLink(appData.photoWrong);
             document.getElementById('displayPhotoCorrect').src = convertDriveLink(appData.photoCorrect);
-
-            // Menu Card Images
             document.getElementById('dispMenuLoveImg').src = convertDriveLink(appData.menuLoveImg);
             document.getElementById('dispMenuBouquetImg').src = convertDriveLink(appData.menuBouquetImg);
             document.getElementById('dispMenuAlbumImg').src = convertDriveLink(appData.menuAlbumImg);
-
             document.getElementById('displayLoveMsg').textContent = appData.loveMsg;
             document.getElementById('displayBouquetDetailImg').src = convertDriveLink(appData.bouquetImg);
             document.getElementById('displayBouquetMsg').textContent = appData.bouquetMsg;
-
             for(let i=1; i<=6; i++) {
                 document.getElementById(`dispAlb${i}`).src = convertDriveLink(appData[`album${i}`]);
             }
         }
 
-        function saveSettings() {
+        // --- WINDOW EXPORTS (Binding HTML onClick events) ---
+        window.saveSettings = async function() {
             appData = {
                 pin: document.getElementById('inputPin').value || defaultData.pin,
                 wrongPinMsg: document.getElementById('inputWrongPinMsg').value || defaultData.wrongPinMsg,
@@ -663,64 +738,66 @@
                 photo: document.getElementById('inputPhoto').value || defaultData.photo,
                 title: document.getElementById('inputTitle').value || defaultData.title,
                 message: document.getElementById('inputMessage').value || defaultData.message,
-                
                 gameTitle: document.getElementById('inputGameTitle').value || defaultData.gameTitle,
                 photoWrong: document.getElementById('inputPhotoWrong').value || defaultData.photoWrong,
                 msgWrong: document.getElementById('inputMsgWrong').value || defaultData.msgWrong,
                 photoCorrect: document.getElementById('inputPhotoCorrect').value || defaultData.photoCorrect,
                 msgCorrect: document.getElementById('inputMsgCorrect').value || defaultData.msgCorrect,
-
                 menuLoveImg: document.getElementById('inputMenuLoveImg').value || defaultData.menuLoveImg,
                 menuBouquetImg: document.getElementById('inputMenuBouquetImg').value || defaultData.menuBouquetImg,
                 menuAlbumImg: document.getElementById('inputMenuAlbumImg').value || defaultData.menuAlbumImg,
-
                 loveMsg: document.getElementById('inputLoveMsg').value || defaultData.loveMsg,
                 bouquetImg: document.getElementById('inputBouquetImg').value || defaultData.bouquetImg,
                 bouquetMsg: document.getElementById('inputBouquetMsg').value || defaultData.bouquetMsg,
-
-                waNumber: document.getElementById('inputWaNumber').value || defaultData.waNumber,
-                waMessage: document.getElementById('inputWaMessage').value || defaultData.waMessage
+                waNumber: document.getElementById('inputWaNumber').value || defaultData.waNumber
             };
-
             for(let i=1; i<=6; i++) {
                 appData[`album${i}`] = document.getElementById(`inputAlbum${i}`).value || defaultData[`album${i}`];
             }
 
-            localStorage.setItem('birthdayPremiumDataV4', JSON.stringify(appData));
             applySettings();
-            toggleSettings();
+            window.toggleSettings();
+            
+            if (isFirebaseReady) {
+                await saveSettingsToCloud();
+            } else {
+                saveSettingsLocal();
+            }
             
             const audio = document.getElementById('bgMusic');
             if (document.getElementById('startScreen').classList.contains('hidden-page') && 
                 document.getElementById('lockScreen').classList.contains('hidden-page')) {
                 audio.play().catch(e => console.log(e));
             }
-        }
+        };
 
-        function resetSettings() {
-            localStorage.removeItem('birthdayPremiumDataV4');
-            loadSettings();
-        }
+        window.resetSettings = function() {
+            appData = { ...defaultData };
+            populateForm();
+            applySettings();
+            window.showCustomAlert('🔄', 'Reset', 'Pengaturan dikembalikan ke default. Klik Simpan untuk memperbarui server.', 'OK');
+        };
 
-        function toggleSettings() {
+        window.toggleSettings = function() {
             document.getElementById('settingsPanel').classList.toggle('translate-x-full');
-        }
+        };
 
-        // --- PIN LOGIC ---
-        function addPin(num) {
+        window.addPin = function(num) {
             if (currentPin.length < MAX_PIN_LENGTH) {
                 currentPin += num;
-                updatePinDots();
-                if (currentPin.length === MAX_PIN_LENGTH) setTimeout(validatePin, 200);
+                window.updatePinDots();
+                if (currentPin.length === MAX_PIN_LENGTH) setTimeout(window.validatePin, 200);
             }
-        }
-        function deletePin() {
+        };
+
+        window.deletePin = function() {
             if (currentPin.length > 0) {
                 currentPin = currentPin.slice(0, -1);
-                updatePinDots();
+                window.updatePinDots();
             }
-        }
-        function updatePinDots() {
+        };
+
+        window.updatePinDots = function() {
             const dots = document.querySelectorAll('.pin-dot');
             dots.forEach((dot, index) => {
                 if (index < currentPin.length) {
@@ -731,129 +808,157 @@
                     dot.classList.add('bg-transparent');
                 }
             });
-        }
-        function validatePin() {
-            if (currentPin === appData.pin) {
-                switchScreen('lockScreen', 'startScreen');
-            } else {
-                showCustomAlert('🤪', 'Oops!', appData.wrongPinMsg, 'Ulangi');
-                currentPin = '';
-                updatePinDots();
-            }
-        }
+        };
 
-        // --- NAVIGATION & LOGIC ---
-        function switchScreen(fromId, toId) {
+        window.validatePin = function() {
+            if (currentPin === appData.pin) {
+                window.switchScreen('lockScreen', 'startScreen');
+            } else {
+                window.showCustomAlert('🤪', 'Oops!', appData.wrongPinMsg, 'Ulangi');
+                currentPin = '';
+                window.updatePinDots();
+            }
+        };
+
+        window.switchScreen = function(fromId, toId) {
             document.getElementById(fromId).classList.replace('visible-page', 'hidden-page');
             document.getElementById(toId).classList.replace('hidden-page', 'visible-page');
-            
-            // Cek status unlock WA setiap kali kembali ke menuScreen
             if (toId === 'menuScreen') {
-                checkWaUnlock();
+                window.checkWaUnlock();
             }
-        }
+        };
 
-        function openSurprise() {
-            switchScreen('startScreen', 'mainContent');
+        window.openSurprise = function() {
+            window.switchScreen('startScreen', 'mainContent');
             document.getElementById('bgMusic').play().catch(e => console.log(e));
-            createHearts();
-        }
+            window.createHearts();
+        };
 
-        // Membuka menu & menandainya telah dibuka
-        function openMenuDetail(menuName, screenId) {
+        window.openMenuDetail = function(menuName, screenId) {
             menuStatus[menuName] = true;
-            switchScreen('menuScreen', screenId);
-        }
+            window.switchScreen('menuScreen', screenId);
+        };
 
-        // Mengecek apakah 3 kotak sudah dibuka untuk unlock WhatsApp
-        function checkWaUnlock() {
+        window.checkWaUnlock = function() {
             if (menuStatus.love && menuStatus.bouquet && menuStatus.album) {
                 const waBtn = document.getElementById('waButton');
-                // Merubah style menjadi aktif dan cantik
                 waBtn.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
                 waBtn.classList.add('btn-primary', 'cursor-pointer');
                 waBtn.innerHTML = 'Kirim Pesan <i class="fas fa-heart ml-3 text-white animate-pulse"></i>';
             }
-        }
+        };
 
-        // Aksi klik Kirim WA
-        function sendWhatsApp() {
+        // Buka Pop-up Pesan Dinamis
+        window.openWaModal = function() {
             if (!menuStatus.love || !menuStatus.bouquet || !menuStatus.album) return;
+            const waModal = document.getElementById('waModal');
+            waModal.classList.remove('opacity-0', 'pointer-events-none');
+        };
 
-            // Hapus karakter non-digit dari nomor telpon
+        window.closeWaModal = function() {
+            const waModal = document.getElementById('waModal');
+            waModal.classList.add('opacity-0', 'pointer-events-none');
+        };
+
+        // Kirim WhatsApp (Membaca Teks Buatan Sendiri)
+        window.sendDynamicWhatsApp = function() {
+            const userMsg = document.getElementById('userWaMessage').value;
+            if (!userMsg.trim()) {
+                window.showCustomAlert('⚠️', 'Hei...', 'Isi pesannya dulu ya sayang ❤️', 'Tutup');
+                return;
+            }
+
             const phoneNumber = appData.waNumber.replace(/\D/g, ''); 
-            // Encode teks pesan (ubah spasi jadi format URL dll)
-            const textMessage = encodeURIComponent(appData.waMessage);
-            
-            // Buka link WhatsApp di tab/aplikasi baru
+            const textMessage = encodeURIComponent(userMsg);
             window.open(`https://wa.me/${phoneNumber}?text=${textMessage}`, '_blank');
-        }
+        };
 
-        // --- FIX RUNAWAY BUTTON ---
-        function moveBtn(btn, containerId) {
+        window.moveBtn = function(btn, containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
             if (btn.style.position !== 'absolute') btn.style.position = 'absolute';
-
             const maxX = container.offsetWidth - btn.offsetWidth - 20;
             const maxY = container.offsetHeight - btn.offsetHeight - 20;
             const newX = Math.max(20, Math.floor(Math.random() * maxX));
             const newY = Math.max(20, Math.floor(Math.random() * maxY));
-
             btn.style.left = `${newX}px`;
             btn.style.top = `${newY}px`;
-        }
+        };
 
-        // --- GAME ACTIONS ---
-        function handleWrong() {
-            showCustomAlert('🙈', 'Tetot!', appData.msgWrong, 'Kembali');
-        }
-        function handleCorrect() {
-            showCustomAlert('🥰', 'Yeay!', appData.msgCorrect, 'Hehehe ✨');
-        }
+        window.handleWrong = function() {
+            window.showCustomAlert('🙈', 'Tetot!', appData.msgWrong, 'Kembali');
+        };
 
-        // --- CUSTOM ALERT ---
-        function showCustomAlert(emoji, title, message, btnText) {
+        window.handleCorrect = function() {
+            // Ubah tombol "Tutup" sementara menjadi "Lanjut"
             const alertBox = document.getElementById('customAlert');
             const alertContent = document.getElementById('customAlertContent');
             
-            document.getElementById('alertEmoji').textContent = emoji;
-            document.getElementById('alertTitle').textContent = title;
-            document.getElementById('alertMessage').textContent = message;
-            document.getElementById('alertBtnText').textContent = btnText;
+            document.getElementById('alertEmoji').textContent = '🥰';
+            document.getElementById('alertTitle').textContent = 'Yeay!';
+            document.getElementById('alertMessage').textContent = appData.msgCorrect;
+            
+            const btnContainer = document.getElementById('alertBtnText').parentElement;
+            btnContainer.innerHTML = 'Lanjut <i class="fas fa-arrow-right ml-2"></i>';
+            btnContainer.onclick = function() {
+                window.closeAlert();
+                window.switchScreen('gameScreen', 'menuScreen');
+                
+                // Kembalikan tombol ke fungsi default
+                setTimeout(() => {
+                    btnContainer.innerHTML = '<span id="alertBtnText">Tutup</span>';
+                    btnContainer.onclick = window.closeAlert;
+                }, 500);
+            };
 
             alertBox.classList.remove('opacity-0', 'pointer-events-none');
             alertContent.classList.replace('scale-95', 'scale-100');
-        }
+        };
 
-        function closeAlert() {
+        window.showCustomAlert = function(emoji, title, message, btnText) {
+            const alertBox = document.getElementById('customAlert');
+            const alertContent = document.getElementById('customAlertContent');
+            document.getElementById('alertEmoji').textContent = emoji;
+            document.getElementById('alertTitle').textContent = title;
+            document.getElementById('alertMessage').textContent = message;
+            
+            const btnContainer = document.getElementById('alertBtnText').parentElement;
+            btnContainer.innerHTML = `<span id="alertBtnText">${btnText}</span>`;
+            btnContainer.onclick = window.closeAlert;
+
+            alertBox.classList.remove('opacity-0', 'pointer-events-none');
+            alertContent.classList.replace('scale-95', 'scale-100');
+        };
+
+        window.closeAlert = function() {
             const alertBox = document.getElementById('customAlert');
             const alertContent = document.getElementById('customAlertContent');
             alertBox.classList.add('opacity-0', 'pointer-events-none');
             alertContent.classList.replace('scale-100', 'scale-95');
-        }
+        };
 
-        // --- ANIMASI HATI ---
-        function createHearts() {
+        window.createHearts = function() {
             const container = document.getElementById('hearts-container');
             setInterval(() => {
                 if(document.visibilityState !== 'visible') return; 
-                
                 const heart = document.createElement('i');
                 heart.classList.add('fas', 'fa-heart', 'heart');
                 heart.style.left = Math.random() * 100 + 'vw';
                 heart.style.animationDuration = (Math.random() * 4 + 6) + 's';
-                
-                // Warna elegan
                 const colors = ['rgba(217,119,127,0.5)', 'rgba(230,150,158,0.5)', 'rgba(255,200,205,0.6)'];
                 heart.style.color = colors[Math.floor(Math.random() * colors.length)];
-
                 container.appendChild(heart);
                 setTimeout(() => heart.remove(), 10000);
             }, 500);
-        }
+        };
 
-        window.onload = loadSettings;
+        window.onload = () => {
+            if (typeof __firebase_config === 'undefined') {
+                loadSettingsLocal();
+            } else {
+                populateForm();
+            }
+        };
     </script>
 </body>
 </html>
