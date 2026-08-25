@@ -56,13 +56,14 @@
 
         /* Transisi Halaman */
         .page-transition {
-            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+            transition: opacity 0.6s ease-in-out, transform 0.6s ease-in-out;
         }
         .hidden-page {
             opacity: 0;
-            transform: scale(0.9);
+            transform: scale(0.95);
             pointer-events: none;
             position: absolute;
+            width: 100%;
         }
         .visible-page {
             opacity: 1;
@@ -70,9 +71,23 @@
             position: relative;
             z-index: 10;
         }
+
+        /* Styling PIN Dots */
+        .pin-dot {
+            transition: background-color 0.2s ease;
+        }
+
+        /* Numpad Hover Effect */
+        .numpad-btn {
+            transition: background-color 0.2s, transform 0.1s;
+        }
+        .numpad-btn:active {
+            transform: scale(0.9);
+            background-color: rgba(236, 72, 153, 0.2); /* pink-500 dengan opacity */
+        }
     </style>
 </head>
-<body class="min-h-screen text-gray-800">
+<body class="min-h-screen text-gray-800 flex flex-col">
 
     <!-- Audio Element (Disembunyikan) -->
     <audio id="bgMusic" loop>
@@ -83,12 +98,12 @@
     <div id="hearts-container"></div>
 
     <!-- Tombol Pengaturan (Pojok Kiri Atas) -->
-    <button onclick="toggleSettings()" class="fixed top-4 left-4 z-50 bg-pink-500 hover:bg-pink-600 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110 flex items-center justify-center">
+    <button onclick="toggleSettings()" class="fixed top-4 left-4 z-[100] bg-pink-500 hover:bg-pink-600 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110 flex items-center justify-center">
         <i class="fas fa-cog text-xl"></i>
     </button>
 
     <!-- Panel Pengaturan -->
-    <div id="settingsPanel" class="fixed inset-y-0 left-0 w-80 bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 overflow-y-auto">
+    <div id="settingsPanel" class="fixed inset-y-0 left-0 w-80 md:w-96 bg-white shadow-2xl z-[100] transform -translate-x-full transition-transform duration-300 overflow-y-auto">
         <div class="p-6">
             <div class="flex justify-between items-center mb-6">
                 <h2 class="text-2xl font-bold text-pink-600 title-font">Pengaturan</h2>
@@ -98,25 +113,54 @@
             </div>
             
             <div class="space-y-4">
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Link Foto (Google Drive/URL)</label>
-                    <input type="text" id="inputPhoto" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Paste link foto di sini...">
-                    <p class="text-xs text-gray-500 mt-1">*Pastikan akses Google Drive diatur ke 'Siapa saja yang memiliki link'.</p>
-                </div>
-                
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Link Musik (Google Drive/MP3)</label>
-                    <input type="text" id="inputMusic" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Paste link musik di sini...">
-                </div>
-
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Judul / Sapaan</label>
-                    <input type="text" id="inputTitle" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Contoh: Happy Birthday Sayang!">
+                <!-- Pengaturan PIN & Pop-up -->
+                <div class="bg-pink-50 p-4 rounded-xl border border-pink-100 space-y-3">
+                    <h3 class="font-bold text-pink-600 text-sm border-b border-pink-200 pb-1">Pengaturan Keamanan</h3>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">PIN (8 Angka)</label>
+                        <input type="text" id="inputPin" maxlength="8" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="04092007">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Pesan saat PIN salah</label>
+                        <input type="text" id="inputWrongPinMsg" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Contoh: Tetot! PIN Salah 🤪">
+                    </div>
                 </div>
 
-                <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1">Kata-kata Ucapan</label>
-                    <textarea id="inputMessage" rows="5" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Tulis pesan manismu di sini..."></textarea>
+                <!-- Pengaturan Kado -->
+                <div class="bg-pink-50 p-4 rounded-xl border border-pink-100 space-y-3">
+                    <h3 class="font-bold text-pink-600 text-sm border-b border-pink-200 pb-1">Pengaturan Layar Kado</h3>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Teks Utama Kado</label>
+                        <input type="text" id="inputGiftTitle" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Contoh: Ada Kado Buat Kamu!">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Teks Petunjuk Kado</label>
+                        <input type="text" id="inputGiftSubtitle" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Contoh: Klik kadonya untuk membuka 💖">
+                    </div>
+                </div>
+
+                <!-- Pengaturan Konten Utama -->
+                <div class="bg-pink-50 p-4 rounded-xl border border-pink-100 space-y-3">
+                    <h3 class="font-bold text-pink-600 text-sm border-b border-pink-200 pb-1">Pengaturan Konten Utama</h3>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Link Foto (G-Drive/URL)</label>
+                        <input type="text" id="inputPhoto" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Paste link foto di sini...">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Link Musik (G-Drive/MP3)</label>
+                        <input type="text" id="inputMusic" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Paste link musik di sini...">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Judul / Sapaan</label>
+                        <input type="text" id="inputTitle" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Contoh: Happy Birthday Sayang!">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Kata-kata Ucapan</label>
+                        <textarea id="inputMessage" rows="4" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Tulis pesan manismu di sini..."></textarea>
+                    </div>
                 </div>
 
                 <button onclick="saveSettings()" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors mt-4">
@@ -129,12 +173,66 @@
         </div>
     </div>
 
-    <!-- Layar Pembuka (Tap to Open) -->
-    <div id="startScreen" class="fixed inset-0 z-40 flex flex-col items-center justify-center bg-pink-100 bg-opacity-95 page-transition visible-page">
+    <!-- Custom Pop-up Alert (Untuk PIN Salah) -->
+    <div id="customAlert" class="fixed inset-0 z-[80] flex items-center justify-center bg-black/40 opacity-0 pointer-events-none transition-opacity duration-300 backdrop-blur-sm">
+        <div id="customAlertContent" class="bg-white p-8 rounded-3xl shadow-2xl text-center max-w-sm w-[90%] mx-4 transform scale-90 transition-transform duration-300 border-4 border-pink-100">
+            <div class="text-6xl mb-4 animate-bounce">🤪</div>
+            <h3 class="text-xl font-bold text-pink-600 mb-2">Oops!</h3>
+            <p id="alertMessage" class="text-gray-700 font-semibold text-lg mb-6 leading-relaxed">PIN salah nih!</p>
+            <button onclick="closeAlert()" class="bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-8 rounded-full shadow-lg transition-transform hover:scale-105 active:scale-95">
+                Coba Lagi
+            </button>
+        </div>
+    </div>
+
+    <!-- Layar Kunci (iPhone Style Lock Screen) -->
+    <div id="lockScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-pink-50/95 backdrop-blur-md page-transition visible-page">
+        <div class="text-center mb-8">
+            <i class="fas fa-lock text-4xl text-pink-400 mb-4"></i>
+            <h2 class="text-2xl font-semibold text-gray-700">Masukkan PIN</h2>
+            <p class="text-pink-400 text-sm mt-1">Tanggal jadian / ulang tahun nih?</p>
+        </div>
+
+        <!-- Indikator PIN (8 Dots) -->
+        <div id="pinDots" class="flex gap-3 mb-10">
+            <div class="pin-dot w-4 h-4 rounded-full border-2 border-pink-400 bg-transparent"></div>
+            <div class="pin-dot w-4 h-4 rounded-full border-2 border-pink-400 bg-transparent"></div>
+            <div class="pin-dot w-4 h-4 rounded-full border-2 border-pink-400 bg-transparent"></div>
+            <div class="pin-dot w-4 h-4 rounded-full border-2 border-pink-400 bg-transparent"></div>
+            <div class="pin-dot w-4 h-4 rounded-full border-2 border-pink-400 bg-transparent"></div>
+            <div class="pin-dot w-4 h-4 rounded-full border-2 border-pink-400 bg-transparent"></div>
+            <div class="pin-dot w-4 h-4 rounded-full border-2 border-pink-400 bg-transparent"></div>
+            <div class="pin-dot w-4 h-4 rounded-full border-2 border-pink-400 bg-transparent"></div>
+        </div>
+
+        <!-- Numpad -->
+        <div class="grid grid-cols-3 gap-x-8 gap-y-6 max-w-xs mx-auto">
+            <button onclick="addPin('1')" class="numpad-btn w-16 h-16 rounded-full bg-white text-gray-700 text-2xl font-light shadow flex items-center justify-center border border-pink-100">1</button>
+            <button onclick="addPin('2')" class="numpad-btn w-16 h-16 rounded-full bg-white text-gray-700 text-2xl font-light shadow flex flex-col items-center justify-center border border-pink-100 leading-none">2<span class="text-[10px] font-normal text-gray-400 mt-1">ABC</span></button>
+            <button onclick="addPin('3')" class="numpad-btn w-16 h-16 rounded-full bg-white text-gray-700 text-2xl font-light shadow flex flex-col items-center justify-center border border-pink-100 leading-none">3<span class="text-[10px] font-normal text-gray-400 mt-1">DEF</span></button>
+            
+            <button onclick="addPin('4')" class="numpad-btn w-16 h-16 rounded-full bg-white text-gray-700 text-2xl font-light shadow flex flex-col items-center justify-center border border-pink-100 leading-none">4<span class="text-[10px] font-normal text-gray-400 mt-1">GHI</span></button>
+            <button onclick="addPin('5')" class="numpad-btn w-16 h-16 rounded-full bg-white text-gray-700 text-2xl font-light shadow flex flex-col items-center justify-center border border-pink-100 leading-none">5<span class="text-[10px] font-normal text-gray-400 mt-1">JKL</span></button>
+            <button onclick="addPin('6')" class="numpad-btn w-16 h-16 rounded-full bg-white text-gray-700 text-2xl font-light shadow flex flex-col items-center justify-center border border-pink-100 leading-none">6<span class="text-[10px] font-normal text-gray-400 mt-1">MNO</span></button>
+            
+            <button onclick="addPin('7')" class="numpad-btn w-16 h-16 rounded-full bg-white text-gray-700 text-2xl font-light shadow flex flex-col items-center justify-center border border-pink-100 leading-none">7<span class="text-[10px] font-normal text-gray-400 mt-1">PQRS</span></button>
+            <button onclick="addPin('8')" class="numpad-btn w-16 h-16 rounded-full bg-white text-gray-700 text-2xl font-light shadow flex flex-col items-center justify-center border border-pink-100 leading-none">8<span class="text-[10px] font-normal text-gray-400 mt-1">TUV</span></button>
+            <button onclick="addPin('9')" class="numpad-btn w-16 h-16 rounded-full bg-white text-gray-700 text-2xl font-light shadow flex flex-col items-center justify-center border border-pink-100 leading-none">9<span class="text-[10px] font-normal text-gray-400 mt-1">WXYZ</span></button>
+            
+            <div class="w-16 h-16"></div> <!-- Spacer -->
+            <button onclick="addPin('0')" class="numpad-btn w-16 h-16 rounded-full bg-white text-gray-700 text-2xl font-light shadow flex items-center justify-center border border-pink-100">0</button>
+            <button onclick="deletePin()" class="numpad-btn w-16 h-16 rounded-full bg-transparent text-gray-500 text-xl flex items-center justify-center hover:text-pink-500">
+                <i class="fas fa-backspace"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Layar Pembuka (Tap to Open / Layar Kado) -->
+    <div id="startScreen" class="fixed inset-0 z-40 flex flex-col items-center justify-center bg-pink-100 bg-opacity-95 page-transition hidden-page">
         <div class="text-center cursor-pointer animate-float" onclick="openSurprise()">
             <i class="fas fa-gift text-8xl text-pink-500 drop-shadow-xl mb-4"></i>
-            <h1 class="title-font text-4xl text-pink-600 drop-shadow-sm mb-2">Ada Kado Buat Kamu!</h1>
-            <p class="text-pink-400 font-semibold animate-pulse">Klik kadonya untuk membuka 💖</p>
+            <h1 id="displayGiftTitle" class="title-font text-4xl text-pink-600 drop-shadow-sm mb-2">Ada Kado Buat Kamu!</h1>
+            <p id="displayGiftSubtitle" class="text-pink-400 font-semibold animate-pulse">Klik kadonya untuk membuka 💖</p>
         </div>
     </div>
 
@@ -174,65 +272,85 @@
     <script>
         // Data Default
         const defaultData = {
-            photo: 'https://images.unsplash.com/photo-1518199266791-5375a83164ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Gambar teddy bear lucu default
-            music: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Musik default
+            pin: '04092007',
+            wrongPinMsg: 'Tetot! PIN salah sayang wleee~ 🤪 Coba ingat-ingat lagi!',
+            giftTitle: 'Ada Kado Buat Kamu!',
+            giftSubtitle: 'Klik kadonya untuk membuka 💖',
+            photo: 'https://images.unsplash.com/photo-1518199266791-5375a83164ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+            music: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
             title: 'Happy Birthday Sayang! 🎂',
             message: 'Selamat ulang tahun untuk orang paling spesial di hatiku!\n\nSemoga hari ini seindah senyummu, dan tahun ini membawa banyak kebahagiaan buat kita berdua. Aku selalu bersyukur memilikimu di hidupku.\n\nI love you more than words can say! 💖🥰'
         };
 
+        let currentPin = '';
+        const MAX_PIN_LENGTH = 8;
+        let appData = { ...defaultData };
+
         // Fungsi untuk mengubah link Google Drive menjadi link direct image/audio
         function convertDriveLink(url) {
             if (!url) return '';
-            // Mencocokkan format link share google drive (file/d/ID/view)
             const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)\//) || url.match(/id=([a-zA-Z0-9_-]+)/);
             if (match && match[1]) {
                 return `https://drive.google.com/uc?export=view&id=${match[1]}`;
             }
-            return url; // Kembalikan url asli jika bukan link gdrive
+            return url;
         }
 
         // Load data dari LocalStorage atau gunakan default
         function loadSettings() {
             const savedData = localStorage.getItem('birthdayData');
-            const data = savedData ? JSON.parse(savedData) : defaultData;
+            appData = savedData ? JSON.parse(savedData) : { ...defaultData };
 
             // Set value ke input form
-            document.getElementById('inputPhoto').value = data.photo;
-            document.getElementById('inputMusic').value = data.music;
-            document.getElementById('inputTitle').value = data.title;
-            document.getElementById('inputMessage').value = data.message;
+            document.getElementById('inputPin').value = appData.pin;
+            document.getElementById('inputWrongPinMsg').value = appData.wrongPinMsg;
+            document.getElementById('inputGiftTitle').value = appData.giftTitle;
+            document.getElementById('inputGiftSubtitle').value = appData.giftSubtitle;
+            document.getElementById('inputPhoto').value = appData.photo;
+            document.getElementById('inputMusic').value = appData.music;
+            document.getElementById('inputTitle').value = appData.title;
+            document.getElementById('inputMessage').value = appData.message;
 
-            applySettings(data);
+            applySettings();
         }
 
         // Terapkan pengaturan ke tampilan web
-        function applySettings(data) {
-            // Konversi link GDrive jika ada
-            const photoUrl = convertDriveLink(data.photo);
-            const musicUrl = convertDriveLink(data.music);
+        function applySettings() {
+            // Konten Kado
+            document.getElementById('displayGiftTitle').textContent = appData.giftTitle;
+            document.getElementById('displayGiftSubtitle').textContent = appData.giftSubtitle;
+
+            // Konten Utama
+            const photoUrl = convertDriveLink(appData.photo);
+            const musicUrl = convertDriveLink(appData.music);
 
             document.getElementById('displayPhoto').src = photoUrl;
             document.getElementById('bgMusic').src = musicUrl;
-            document.getElementById('displayTitle').textContent = data.title;
-            document.getElementById('displayMessage').textContent = data.message;
+            document.getElementById('displayTitle').textContent = appData.title;
+            document.getElementById('displayMessage').textContent = appData.message;
         }
 
         // Simpan pengaturan baru
         function saveSettings() {
-            const newData = {
+            appData = {
+                pin: document.getElementById('inputPin').value || defaultData.pin,
+                wrongPinMsg: document.getElementById('inputWrongPinMsg').value || defaultData.wrongPinMsg,
+                giftTitle: document.getElementById('inputGiftTitle').value || defaultData.giftTitle,
+                giftSubtitle: document.getElementById('inputGiftSubtitle').value || defaultData.giftSubtitle,
                 photo: document.getElementById('inputPhoto').value || defaultData.photo,
                 music: document.getElementById('inputMusic').value || defaultData.music,
                 title: document.getElementById('inputTitle').value || defaultData.title,
                 message: document.getElementById('inputMessage').value || defaultData.message
             };
 
-            localStorage.setItem('birthdayData', JSON.stringify(newData));
-            applySettings(newData);
+            localStorage.setItem('birthdayData', JSON.stringify(appData));
+            applySettings();
             toggleSettings(); // Tutup panel
             
-            // Reload musik jika sedang dimainkan
+            // Reload musik jika sedang dimainkan (berada di mainContent)
+            const mainContent = document.getElementById('mainContent');
             const audio = document.getElementById('bgMusic');
-            if(!audio.paused) {
+            if (mainContent.classList.contains('visible-page')) {
                 audio.load();
                 audio.play().catch(e => console.log("Audio play failed:", e));
             }
@@ -254,13 +372,89 @@
             }
         }
 
-        // Buka Kado (Start Interaksi)
+        // --- LOGIKA PIN LAYAR KUNCI ---
+
+        function addPin(num) {
+            if (currentPin.length < MAX_PIN_LENGTH) {
+                currentPin += num;
+                updatePinDots();
+                
+                // Jika sudah 8 digit, validasi
+                if (currentPin.length === MAX_PIN_LENGTH) {
+                    // Beri sedikit jeda agar dot terakhir terlihat terisi
+                    setTimeout(validatePin, 150);
+                }
+            }
+        }
+
+        function deletePin() {
+            if (currentPin.length > 0) {
+                currentPin = currentPin.slice(0, -1);
+                updatePinDots();
+            }
+        }
+
+        function updatePinDots() {
+            const dots = document.querySelectorAll('.pin-dot');
+            dots.forEach((dot, index) => {
+                if (index < currentPin.length) {
+                    dot.classList.add('bg-pink-500', 'border-pink-500');
+                    dot.classList.remove('bg-transparent', 'border-pink-400');
+                } else {
+                    dot.classList.remove('bg-pink-500', 'border-pink-500');
+                    dot.classList.add('bg-transparent', 'border-pink-400');
+                }
+            });
+        }
+
+        function validatePin() {
+            if (currentPin === appData.pin) {
+                // PIN Benar
+                const lockScreen = document.getElementById('lockScreen');
+                const startScreen = document.getElementById('startScreen');
+                
+                lockScreen.classList.remove('visible-page');
+                lockScreen.classList.add('hidden-page');
+                
+                startScreen.classList.remove('hidden-page');
+                startScreen.classList.add('visible-page');
+            } else {
+                // PIN Salah
+                showCustomAlert(appData.wrongPinMsg);
+                currentPin = '';
+                updatePinDots();
+            }
+        }
+
+        // --- CUSTOM ALERT LOGIC ---
+        function showCustomAlert(message) {
+            const alertBox = document.getElementById('customAlert');
+            const alertContent = document.getElementById('customAlertContent');
+            const alertMessage = document.getElementById('alertMessage');
+            
+            alertMessage.textContent = message;
+            
+            alertBox.classList.remove('opacity-0', 'pointer-events-none');
+            alertContent.classList.remove('scale-90');
+            alertContent.classList.add('scale-100');
+        }
+
+        function closeAlert() {
+            const alertBox = document.getElementById('customAlert');
+            const alertContent = document.getElementById('customAlertContent');
+            
+            alertBox.classList.add('opacity-0', 'pointer-events-none');
+            alertContent.classList.remove('scale-100');
+            alertContent.classList.add('scale-90');
+        }
+
+        // --- BUKA KADO LOGIC ---
         function openSurprise() {
             const startScreen = document.getElementById('startScreen');
             const mainContent = document.getElementById('mainContent');
             const audio = document.getElementById('bgMusic');
 
-            // Sembunyikan layar awal, tampilkan layar utama
+            // Sembunyikan layar kado, tampilkan layar utama
             startScreen.classList.remove('visible-page');
             startScreen.classList.add('hidden-page');
             
@@ -269,9 +463,7 @@
 
             // Putar Musik
             audio.play().catch(error => {
-                console.log("Autoplay dicegah oleh browser:", error);
-                // Jika gagal, bisa tambahkan tombol play manual di dalam main content jika mau, 
-                // tapi biasanya interaksi klik kado sudah cukup mem-bypass blokir autoplay.
+                console.log("Autoplay dicegah:", error);
             });
 
             // Mulai efek hati beterbangan
@@ -285,22 +477,19 @@
                 const heart = document.createElement('i');
                 heart.classList.add('fas', 'fa-heart', 'heart');
                 
-                // Posisi horizontal acak, ukuran acak, durasi acak
                 heart.style.left = Math.random() * 100 + 'vw';
                 heart.style.animationDuration = (Math.random() * 3 + 4) + 's'; // 4-7 detik
                 heart.style.fontSize = (Math.random() * 1.5 + 0.5) + 'rem';
                 
-                // Tambahkan warna pink yang bervariasi
                 const pinks = ['#ec4899', '#f472b6', '#db2777', '#fbcfe8'];
                 heart.style.color = pinks[Math.floor(Math.random() * pinks.length)];
 
                 container.appendChild(heart);
 
-                // Hapus elemen setelah animasi selesai agar memori tidak penuh
                 setTimeout(() => {
                     heart.remove();
                 }, 7000);
-            }, 300); // Buat hati baru setiap 300ms
+            }, 300);
         }
 
         // Inisialisasi saat web dimuat
