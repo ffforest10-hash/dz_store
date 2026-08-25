@@ -500,7 +500,7 @@
                 await window.saveToCloudFn(appData);
             } else {
                 localStorage.setItem('bdPremiumV7', JSON.stringify(appData));
-                showCustomAlert('💾', 'Tersimpan Lokal', 'Data disimpan di peramban ini.', 'OK');
+                showCustomAlert('💾', 'Tersimpan Lokal', 'Data disimpan di peramban ini. Pastikan Anda telah memasukkan kredensial Firebase di dalam kode sumber.', 'OK');
             }
 
             btn.innerHTML = 'Simpan Publik';
@@ -660,22 +660,46 @@
 
     <!-- FIREBASE CLOUD REAL-TIME -->
     <script type="module">
+        // ==== PENTING: ISI CONFIG FIREBASE ANDA DI SINI ====
+        // Jika Anda menjalankan file ini di Github Pages, ganti "null" di bawah ini
+        // dengan objek konfigurasi Firebase Anda sendiri. Contoh:
+        // const myFirebaseConfig = {
+        //   apiKey: "AIzaSyDOCAbC123...",
+        //   authDomain: "project-id.firebaseapp.com",
+        //   projectId: "project-id",
+        //   storageBucket: "project-id.appspot.com",
+        //   messagingSenderId: "123456789",
+        //   appId: "1:123456789:web:abcdef123456"
+        // };
+        const myFirebaseConfig = null; // <- Ganti null dengan objek config Anda
+
+        // Cek apakah ditaruh di Immersive Environment atau pakai Config Sendiri
+        let activeConfig = null;
         if (typeof __firebase_config !== 'undefined') {
+            activeConfig = JSON.parse(__firebase_config);
+        } else if (myFirebaseConfig !== null) {
+            activeConfig = myFirebaseConfig;
+        }
+
+        if (activeConfig !== null) {
             import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js").then(({ initializeApp }) => {
                 import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js").then(({ getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged }) => {
                     import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js").then(({ getFirestore, doc, setDoc, onSnapshot }) => {
                         
-                        const app = initializeApp(JSON.parse(__firebase_config));
+                        const app = initializeApp(activeConfig);
                         const auth = getAuth(app);
                         const db = getFirestore(app);
-                        const appId = typeof __app_id !== 'undefined' ? __app_id : 'birthday-app';
                         
-                        // FIX: Path dokumen diubah agar genap (menunjuk ke dokumen 'data', bukan koleksi)
+                        // ID App Unik. Jika di Github, gunakan id statis seperti 'ultah-pacar'
+                        const appId = typeof __app_id !== 'undefined' ? __app_id : 'ultah-pacar-123';
                         const docRef = doc(db, 'artifacts', appId, 'public', 'data');
 
                         const initAuth = async () => {
-                            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) await signInWithCustomToken(auth, __initial_auth_token);
-                            else await signInAnonymously(auth);
+                            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                                await signInWithCustomToken(auth, __initial_auth_token);
+                            } else {
+                                await signInAnonymously(auth);
+                            }
                         };
                         initAuth();
 
@@ -685,20 +709,26 @@
                                 window.saveToCloudFn = async (data) => {
                                     try {
                                         await setDoc(docRef, data);
-                                        window.showCustomAlert('☁️', 'Tersimpan!', 'Perubahan sudah Online & Publik. Pacarmu akan melihatnya.', 'OK');
+                                        window.showCustomAlert('☁️', 'Tersimpan!', 'Perubahan sudah Online & Publik. Pacarmu akan melihatnya saat membuka link.', 'OK');
                                     } catch (e) {
-                                        console.log(e); window.showCustomAlert('❌', 'Gagal', 'Terjadi kesalahan internet.', 'Tutup');
+                                        console.error("Firestore error:", e);
+                                        window.showCustomAlert('❌', 'Gagal', 'Pastikan database Firestore Anda sudah diatur ke mode test (allow read, write).', 'Tutup');
                                     }
                                 };
-                                // Listen real-time
+                                
+                                // Listen real-time: Otomatis memperbarui web saat ada data baru masuk
                                 onSnapshot(docRef, (docSnap) => {
-                                    if (docSnap.exists()) window.updateAppData(docSnap.data());
+                                    if (docSnap.exists()) {
+                                        window.updateAppData(docSnap.data());
+                                    }
                                 });
                             }
                         });
-                    });
-                });
-            });
+                    }).catch(console.error);
+                }).catch(console.error);
+            }).catch(console.error);
+        } else {
+            console.log("Firebase tidak diaktifkan karena konfigurasi tidak ditemukan. Menggunakan penyimpanan lokal.");
         }
     </script>
 </body>
