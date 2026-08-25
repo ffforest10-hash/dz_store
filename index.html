@@ -559,7 +559,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, doc, setDoc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- DATA DEFAULT MEWAH & ELEGAN ---
         const defaultData = {
@@ -601,9 +601,11 @@
         let menuStatus = { love: false, bouquet: false, album: false };
 
         // --- FIREBASE CLOUD SETUP ---
-        let db, auth;
+        let db, auth, currentUser;
         let isFirebaseReady = false;
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'birthday-app';
+        
+        // Gunakan ID aplikasi yang valid untuk platform ini
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-birthday-app-id';
 
         if (typeof __firebase_config !== 'undefined') {
             const firebaseConfig = JSON.parse(__firebase_config);
@@ -622,12 +624,114 @@
 
             onAuthStateChanged(auth, (user) => {
                 if (user) {
+                    currentUser = user;
                     isFirebaseReady = true;
-                    loadSettingsFromCloud();
+                    // Mulai mendengarkan perubahan data secara real-time
+                    listenToCloudSettings();
                 }
             });
         } else {
+            console.warn("Firebase config tidak ditemukan, menggunakan penyimpanan lokal.");
             loadSettingsLocal();
+        }
+
+        // Fungsi path dokumen sesuai aturan platform Immersive Editor
+        function getCloudDocRef() {
+            return doc(db, 'artifacts', appId, 'public', 'data', 'config');
+        }
+
+        // Mendengarkan perubahan data secara Real-Time dari server
+        function listenToCloudSettings() {
+            if (!isFirebaseReady || !currentUser) return;
+            
+            const docRef = getCloudDocRef();
+            
+            onSnapshot(docRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    appData = { ...defaultData, ...docSnap.data() };
+                    console.log("Data diperbarui dari server (Cloud).");
+                } else {
+                    appData = { ...defaultData };
+                }
+                populateForm();
+                applySettings();
+            }, (error) => {
+                console.error("Gagal mendengarkan data dari cloud:", error);
+                // Fallback ke penyimpanan lokal jika server error
+                loadSettingsLocal();
+            });
+        }
+
+        // Fungsi Menyimpan Data ke Server
+        window.saveSettings = async function() {
+            // Ambil data terbaru dari form
+            const newData = {
+                pin: document.getElementById('inputPin').value || defaultData.pin,
+                wrongPinMsg: document.getElementById('inputWrongPinMsg').value || defaultData.wrongPinMsg,
+                music: document.getElementById('inputMusic').value || defaultData.music,
+                photo: document.getElementById('inputPhoto').value || defaultData.photo,
+                title: document.getElementById('inputTitle').value || defaultData.title,
+                message: document.getElementById('inputMessage').value || defaultData.message,
+                gameTitle: document.getElementById('inputGameTitle').value || defaultData.gameTitle,
+                photoWrong: document.getElementById('inputPhotoWrong').value || defaultData.photoWrong,
+                msgWrong: document.getElementById('inputMsgWrong').value || defaultData.msgWrong,
+                photoCorrect: document.getElementById('inputPhotoCorrect').value || defaultData.photoCorrect,
+                msgCorrect: document.getElementById('inputMsgCorrect').value || defaultData.msgCorrect,
+                menuLoveImg: document.getElementById('inputMenuLoveImg').value || defaultData.menuLoveImg,
+                menuBouquetImg: document.getElementById('inputMenuBouquetImg').value || defaultData.menuBouquetImg,
+                menuAlbumImg: document.getElementById('inputMenuAlbumImg').value || defaultData.menuAlbumImg,
+                loveMsg: document.getElementById('inputLoveMsg').value || defaultData.loveMsg,
+                bouquetImg: document.getElementById('inputBouquetImg').value || defaultData.bouquetImg,
+                bouquetMsg: document.getElementById('inputBouquetMsg').value || defaultData.bouquetMsg,
+                waNumber: document.getElementById('inputWaNumber').value || defaultData.waNumber
+            };
+
+            for(let i=1; i<=6; i++) {
+                newData[`album${i}`] = document.getElementById(`inputAlbum${i}`).value || defaultData[`album${i}`];
+            }
+
+            // Menerapkan ke antarmuka saat ini
+            appData = newData;
+            applySettings();
+            window.toggleSettings();
+            
+            // Simpan Ke Firebase Server
+            if (isFirebaseReady && currentUser) {
+                try {
+                    window.showCustomAlert('⏳', 'Menyimpan...', 'Tunggu sebentar ya...', 'Ok');
+                    const btnContainer = document.getElementById('alertBtnText').parentElement;
+                    btnContainer.style.display = 'none'; // Sembunyikan tombol sementara
+                    
+                    await setDoc(getCloudDocRef(), appData);
+                    
+                    btnContainer.style.display = 'block'; // Tampilkan lagi
+                    window.showCustomAlert('☁️', 'Tersimpan!', 'Pengaturan berhasil disimpan secara publik! Perangkat lain akan otomatis diperbarui.', 'OK');
+                } catch (error) {
+                    console.error("Gagal menyimpan ke cloud:", error);
+                    window.showCustomAlert('❌', 'Gagal', 'Terjadi kesalahan saat menyimpan ke server. Data disimpan di perangkat ini saja.', 'Tutup');
+                    saveSettingsLocal();
+                }
+            } else {
+                saveSettingsLocal();
+            }
+            
+            const audio = document.getElementById('bgMusic');
+            if (document.getElementById('startScreen').classList.contains('hidden-page') && 
+                document.getElementById('lockScreen').classList.contains('hidden-page')) {
+                audio.play().catch(e => console.log(e));
+            }
+        };
+
+        function loadSettingsLocal() {
+            const savedData = localStorage.getItem('birthdayPremiumDataV5');
+            appData = savedData ? { ...defaultData, ...JSON.parse(savedData) } : { ...defaultData };
+            populateForm();
+            applySettings();
+        }
+
+        function saveSettingsLocal() {
+            localStorage.setItem('birthdayPremiumDataV5', JSON.stringify(appData));
+            window.showCustomAlert('💾', 'Tersimpan Lokal!', 'Data disimpan sementara di peramban ini (Firebase Cloud tidak tersedia).', 'Tutup');
         }
 
         function getCloudDocRef() {
