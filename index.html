@@ -669,7 +669,9 @@
                         const auth = getAuth(app);
                         const db = getFirestore(app);
                         const appId = typeof __app_id !== 'undefined' ? __app_id : 'birthday-app';
-                        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'config');
+                        
+                        // FIX: Path dokumen diubah agar genap (menunjuk ke dokumen 'data', bukan koleksi)
+                        const docRef = doc(db, 'artifacts', appId, 'public', 'data');
 
                         const initAuth = async () => {
                             if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) await signInWithCustomToken(auth, __initial_auth_token);
