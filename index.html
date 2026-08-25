@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sayang!</title>
+    <!-- Tailwind CSS untuk Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome untuk Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+        }
+        
+        .title-font {
+            font-family: 'Pacifico', cursive;
+        }
+
+        /* Animasi Mengambang untuk Kado */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Animasi Hati Beterbangan */
+        .heart {
+            position: fixed;
+            bottom: -10vh;
+            font-size: 1.5rem;
+            color: #ec4899;
+            animation: rise 5s linear infinite, wobble 2s ease-in-out infinite alternate;
+            z-index: 0;
+            opacity: 0.7;
+        }
+
+        @keyframes rise {
+            0% { bottom: -10vh; transform: scale(0); opacity: 0; }
+            10% { transform: scale(1); opacity: 0.7; }
+            100% { bottom: 110vh; opacity: 0; }
+        }
+
+        @keyframes wobble {
+            0% { margin-left: -20px; }
+            100% { margin-left: 20px; }
+        }
+
+        /* Transisi Halaman */
+        .page-transition {
+            transition: opacity 0.8s ease-in-out, transform 0.8s ease-in-out;
+        }
+        .hidden-page {
+            opacity: 0;
+            transform: scale(0.9);
+            pointer-events: none;
+            position: absolute;
+        }
+        .visible-page {
+            opacity: 1;
+            transform: scale(1);
+            position: relative;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="min-h-screen text-gray-800">
+
+    <!-- Audio Element (Disembunyikan) -->
+    <audio id="bgMusic" loop>
+        <source src="" type="audio/mpeg">
+    </audio>
+
+    <!-- Hati Beterbangan Container -->
+    <div id="hearts-container"></div>
+
+    <!-- Tombol Pengaturan (Pojok Kiri Atas) -->
+    <button onclick="toggleSettings()" class="fixed top-4 left-4 z-50 bg-pink-500 hover:bg-pink-600 text-white p-3 rounded-full shadow-lg transition-transform hover:scale-110 flex items-center justify-center">
+        <i class="fas fa-cog text-xl"></i>
+    </button>
+
+    <!-- Panel Pengaturan -->
+    <div id="settingsPanel" class="fixed inset-y-0 left-0 w-80 bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 overflow-y-auto">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold text-pink-600 title-font">Pengaturan</h2>
+                <button onclick="toggleSettings()" class="text-gray-400 hover:text-pink-500 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Link Foto (Google Drive/URL)</label>
+                    <input type="text" id="inputPhoto" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Paste link foto di sini...">
+                    <p class="text-xs text-gray-500 mt-1">*Pastikan akses Google Drive diatur ke 'Siapa saja yang memiliki link'.</p>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Link Musik (Google Drive/MP3)</label>
+                    <input type="text" id="inputMusic" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Paste link musik di sini...">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Judul / Sapaan</label>
+                    <input type="text" id="inputTitle" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Contoh: Happy Birthday Sayang!">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Kata-kata Ucapan</label>
+                    <textarea id="inputMessage" rows="5" class="w-full border border-pink-200 rounded-lg p-2 focus:outline-none focus:border-pink-500 focus:ring-1 focus:ring-pink-500 text-sm" placeholder="Tulis pesan manismu di sini..."></textarea>
+                </div>
+
+                <button onclick="saveSettings()" class="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-2 px-4 rounded-lg shadow transition-colors mt-4">
+                    Simpan & Terapkan
+                </button>
+                <button onclick="resetSettings()" class="w-full bg-gray-200 hover:bg-gray-300 text-gray-700 font-bold py-2 px-4 rounded-lg shadow transition-colors mt-2 text-sm">
+                    Reset ke Default
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Layar Pembuka (Tap to Open) -->
+    <div id="startScreen" class="fixed inset-0 z-40 flex flex-col items-center justify-center bg-pink-100 bg-opacity-95 page-transition visible-page">
+        <div class="text-center cursor-pointer animate-float" onclick="openSurprise()">
+            <i class="fas fa-gift text-8xl text-pink-500 drop-shadow-xl mb-4"></i>
+            <h1 class="title-font text-4xl text-pink-600 drop-shadow-sm mb-2">Ada Kado Buat Kamu!</h1>
+            <p class="text-pink-400 font-semibold animate-pulse">Klik kadonya untuk membuka 💖</p>
+        </div>
+    </div>
+
+    <!-- Halaman Utama (Surprise) -->
+    <div id="mainContent" class="min-h-screen flex items-center justify-center p-4 page-transition hidden-page">
+        <div class="bg-white/80 backdrop-blur-sm p-8 md:p-12 rounded-3xl shadow-[0_15px_35px_rgba(236,72,153,0.2)] max-w-2xl w-full text-center border-2 border-pink-100 relative">
+            
+            <!-- Hiasan Sudut -->
+            <i class="fas fa-heart text-pink-300 text-3xl absolute top-6 left-6 rotate-[-15deg]"></i>
+            <i class="fas fa-heart text-pink-300 text-3xl absolute top-6 right-6 rotate-[15deg]"></i>
+            
+            <!-- Foto Pacar -->
+            <div class="relative w-48 h-48 md:w-56 md:h-56 mx-auto mb-6 group">
+                <div class="absolute inset-0 bg-pink-400 rounded-full blur opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
+                <img id="displayPhoto" src="" alt="Foto Pacar" class="relative w-full h-full object-cover rounded-full border-4 border-white shadow-xl">
+            </div>
+
+            <!-- Teks Ucapan -->
+            <h1 id="displayTitle" class="title-font text-4xl md:text-5xl text-pink-500 mb-6 drop-shadow-sm">
+                Happy Birthday!
+            </h1>
+            
+            <div class="bg-pink-50 p-6 rounded-2xl border border-pink-100 shadow-inner">
+                <p id="displayMessage" class="text-gray-700 text-lg md:text-xl leading-relaxed whitespace-pre-line">
+                    Memuat pesan cinta...
+                </p>
+            </div>
+            
+            <div class="mt-8 flex justify-center space-x-2 text-pink-400 text-xl">
+                <i class="fas fa-star animate-pulse"></i>
+                <i class="fas fa-star animate-pulse" style="animation-delay: 0.2s"></i>
+                <i class="fas fa-star animate-pulse" style="animation-delay: 0.4s"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data Default
+        const defaultData = {
+            photo: 'https://images.unsplash.com/photo-1518199266791-5375a83164ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Gambar teddy bear lucu default
+            music: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', // Musik default
+            title: 'Happy Birthday Sayang! 🎂',
+            message: 'Selamat ulang tahun untuk orang paling spesial di hatiku!\n\nSemoga hari ini seindah senyummu, dan tahun ini membawa banyak kebahagiaan buat kita berdua. Aku selalu bersyukur memilikimu di hidupku.\n\nI love you more than words can say! 💖🥰'
+        };
+
+        // Fungsi untuk mengubah link Google Drive menjadi link direct image/audio
+        function convertDriveLink(url) {
+            if (!url) return '';
+            // Mencocokkan format link share google drive (file/d/ID/view)
+            const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)\//) || url.match(/id=([a-zA-Z0-9_-]+)/);
+            if (match && match[1]) {
+                return `https://drive.google.com/uc?export=view&id=${match[1]}`;
+            }
+            return url; // Kembalikan url asli jika bukan link gdrive
+        }
+
+        // Load data dari LocalStorage atau gunakan default
+        function loadSettings() {
+            const savedData = localStorage.getItem('birthdayData');
+            const data = savedData ? JSON.parse(savedData) : defaultData;
+
+            // Set value ke input form
+            document.getElementById('inputPhoto').value = data.photo;
+            document.getElementById('inputMusic').value = data.music;
+            document.getElementById('inputTitle').value = data.title;
+            document.getElementById('inputMessage').value = data.message;
+
+            applySettings(data);
+        }
+
+        // Terapkan pengaturan ke tampilan web
+        function applySettings(data) {
+            // Konversi link GDrive jika ada
+            const photoUrl = convertDriveLink(data.photo);
+            const musicUrl = convertDriveLink(data.music);
+
+            document.getElementById('displayPhoto').src = photoUrl;
+            document.getElementById('bgMusic').src = musicUrl;
+            document.getElementById('displayTitle').textContent = data.title;
+            document.getElementById('displayMessage').textContent = data.message;
+        }
+
+        // Simpan pengaturan baru
+        function saveSettings() {
+            const newData = {
+                photo: document.getElementById('inputPhoto').value || defaultData.photo,
+                music: document.getElementById('inputMusic').value || defaultData.music,
+                title: document.getElementById('inputTitle').value || defaultData.title,
+                message: document.getElementById('inputMessage').value || defaultData.message
+            };
+
+            localStorage.setItem('birthdayData', JSON.stringify(newData));
+            applySettings(newData);
+            toggleSettings(); // Tutup panel
+            
+            // Reload musik jika sedang dimainkan
+            const audio = document.getElementById('bgMusic');
+            if(!audio.paused) {
+                audio.load();
+                audio.play().catch(e => console.log("Audio play failed:", e));
+            }
+        }
+
+        // Reset ke default
+        function resetSettings() {
+            localStorage.removeItem('birthdayData');
+            loadSettings();
+        }
+
+        // Buka/Tutup Menu Pengaturan
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            if (panel.classList.contains('-translate-x-full')) {
+                panel.classList.remove('-translate-x-full');
+            } else {
+                panel.classList.add('-translate-x-full');
+            }
+        }
+
+        // Buka Kado (Start Interaksi)
+        function openSurprise() {
+            const startScreen = document.getElementById('startScreen');
+            const mainContent = document.getElementById('mainContent');
+            const audio = document.getElementById('bgMusic');
+
+            // Sembunyikan layar awal, tampilkan layar utama
+            startScreen.classList.remove('visible-page');
+            startScreen.classList.add('hidden-page');
+            
+            mainContent.classList.remove('hidden-page');
+            mainContent.classList.add('visible-page');
+
+            // Putar Musik
+            audio.play().catch(error => {
+                console.log("Autoplay dicegah oleh browser:", error);
+                // Jika gagal, bisa tambahkan tombol play manual di dalam main content jika mau, 
+                // tapi biasanya interaksi klik kado sudah cukup mem-bypass blokir autoplay.
+            });
+
+            // Mulai efek hati beterbangan
+            createHearts();
+        }
+
+        // Efek Hati Beterbangan
+        function createHearts() {
+            const container = document.getElementById('hearts-container');
+            setInterval(() => {
+                const heart = document.createElement('i');
+                heart.classList.add('fas', 'fa-heart', 'heart');
+                
+                // Posisi horizontal acak, ukuran acak, durasi acak
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 4) + 's'; // 4-7 detik
+                heart.style.fontSize = (Math.random() * 1.5 + 0.5) + 'rem';
+                
+                // Tambahkan warna pink yang bervariasi
+                const pinks = ['#ec4899', '#f472b6', '#db2777', '#fbcfe8'];
+                heart.style.color = pinks[Math.floor(Math.random() * pinks.length)];
+
+                container.appendChild(heart);
+
+                // Hapus elemen setelah animasi selesai agar memori tidak penuh
+                setTimeout(() => {
+                    heart.remove();
+                }, 7000);
+            }, 300); // Buat hati baru setiap 300ms
+        }
+
+        // Inisialisasi saat web dimuat
+        window.onload = loadSettings;
+    </script>
+</body>
+</html>
