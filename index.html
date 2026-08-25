@@ -12,6 +12,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
+        /* --- WARNA KUSTOM ANTI-BUG --- */
+        .text-custom-rose { color: #d9777f !important; }
+        .bg-custom-rose { background-color: #d9777f !important; }
+        .border-custom-rose { border-color: #d9777f !important; }
+
         body {
             font-family: 'Quicksand', sans-serif;
             overflow: hidden;
@@ -23,12 +28,9 @@
             color: #4a4a4a;
         }
         
-        /* Font Mewah untuk Judul */
-        .lux-font {
-            font-family: 'Playfair Display', serif;
-        }
+        .lux-font { font-family: 'Playfair Display', serif; }
 
-        /* --- CLEAN GLASSMORPHISM (Elegan & Mewah) --- */
+        /* --- CLEAN GLASSMORPHISM --- */
         .glass {
             background: rgba(255, 255, 255, 0.65);
             backdrop-filter: blur(20px);
@@ -56,11 +58,8 @@
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(153, 27, 27, 0.08);
         }
-        .glass-btn:active {
-            transform: scale(0.95);
-        }
+        .glass-btn:active { transform: scale(0.95); }
 
-        /* Tombol Utama Mewah (Solid Rose Gold) */
         .btn-primary {
             background-color: #d9777f; 
             color: white;
@@ -73,7 +72,6 @@
             box-shadow: 0 10px 30px rgba(217, 119, 127, 0.4);
         }
 
-        /* Polaroid Estetik */
         .polaroid {
             background: #fff;
             padding: 8px 8px 35px 8px;
@@ -103,10 +101,7 @@
             100% { transform: translate(-20px, 30px) scale(0.95); }
         }
 
-        /* Transisi Halaman */
-        .page-transition {
-            transition: opacity 0.8s ease, transform 0.8s ease;
-        }
+        .page-transition { transition: opacity 0.6s ease, transform 0.6s ease; }
         .hidden-page {
             opacity: 0;
             transform: scale(0.98) translateY(10px);
@@ -125,11 +120,8 @@
             overflow-y: auto;
         }
 
-        .runaway-btn {
-            transition: top 0.2s ease-out, left 0.2s ease-out;
-        }
+        .runaway-btn { transition: top 0.2s ease-out, left 0.2s ease-out; }
 
-        /* Animasi Hati Beterbangan */
         .heart {
             position: fixed;
             bottom: -10vh;
@@ -150,7 +142,7 @@
 
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: rgba(217, 119, 127, 0.3); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #d9777f; border-radius: 10px; }
     </style>
 </head>
 <body>
@@ -160,239 +152,169 @@
     <div class="blob bg-rose-100 w-[600px] h-[600px] bottom-[-20%] right-[-15%] fixed pointer-events-none" style="animation-delay: -5s;"></div>
     <div class="blob bg-orange-50 w-[400px] h-[400px] top-[30%] left-[20%] fixed pointer-events-none" style="animation-delay: -7s;"></div>
 
-    <!-- Audio Element -->
     <audio id="bgMusic" loop><source src="" type="audio/mpeg"></audio>
-
-    <!-- Hati Beterbangan Container -->
     <div id="hearts-container" class="fixed inset-0 pointer-events-none overflow-hidden z-[5]"></div>
 
     <!-- Tombol Pengaturan -->
-    <button onclick="window.toggleSettings()" class="fixed top-6 right-6 z-[100] glass-btn text-[#d9777f] w-12 h-12 rounded-full flex items-center justify-center">
+    <button onclick="toggleSettings()" class="fixed top-6 right-6 z-[100] glass-btn text-custom-rose w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110">
         <i class="fas fa-sliders-h text-lg"></i>
     </button>
 
-    <!-- Panel Pengaturan Mewah -->
+    <!-- Panel Pengaturan -->
     <div id="settingsPanel" class="fixed inset-y-0 right-0 w-full sm:w-[450px] glass-panel shadow-2xl z-[150] transform translate-x-full transition-transform duration-500 overflow-y-auto border-l border-white/80">
         <div class="p-8">
             <div class="flex justify-between items-center mb-8 border-b border-gray-200 pb-4">
-                <h2 class="text-2xl font-semibold text-[#d9777f] lux-font italic">Pengaturan</h2>
-                <button onclick="window.toggleSettings()" class="text-gray-400 hover:text-[#d9777f] text-xl transition-colors">
-                    <i class="fas fa-times"></i>
-                </button>
+                <h2 class="text-2xl font-semibold text-custom-rose lux-font italic">Pengaturan</h2>
+                <button onclick="toggleSettings()" class="text-gray-400 hover:text-custom-rose text-xl transition-colors"><i class="fas fa-times"></i></button>
             </div>
             
             <div class="space-y-4 text-sm pb-24 text-gray-600">
-                
                 <!-- Keamanan -->
                 <details class="glass p-5 rounded-2xl cursor-pointer group">
-                    <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fas fa-lock w-5 text-[#d9777f] mr-2"></i> Keamanan & Musik</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
+                    <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fas fa-lock w-5 text-custom-rose mr-2"></i> Keamanan & Musik</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
                     <div class="mt-4 space-y-3 cursor-auto">
-                        <div>
-                            <label class="block text-xs font-medium mb-1">PIN (8 Angka)</label>
-                            <input type="text" id="inputPin" maxlength="8" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-[#d9777f]">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium mb-1">Pesan Error PIN</label>
-                            <input type="text" id="inputWrongPinMsg" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-[#d9777f]">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium mb-1">Link Musik</label>
-                            <input type="text" id="inputMusic" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-[#d9777f]">
-                        </div>
+                        <div><label class="block text-xs font-medium mb-1">PIN (8 Angka)</label><input type="text" id="inputPin" maxlength="8" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-custom-rose"></div>
+                        <div><label class="block text-xs font-medium mb-1">Pesan Error PIN</label><input type="text" id="inputWrongPinMsg" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-custom-rose"></div>
+                        <div><label class="block text-xs font-medium mb-1">Link Musik (URL/Drive)</label><input type="text" id="inputMusic" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-custom-rose"></div>
                     </div>
                 </details>
 
                 <!-- Ucapan Awal -->
                 <details class="glass p-5 rounded-2xl cursor-pointer group">
-                    <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fas fa-envelope-open-text w-5 text-[#d9777f] mr-2"></i> Pesan Utama</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
+                    <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fas fa-envelope-open-text w-5 text-custom-rose mr-2"></i> Pesan Utama</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
                     <div class="mt-4 space-y-3 cursor-auto">
-                        <div>
-                            <label class="block text-xs font-medium mb-1">Foto Utama</label>
-                            <input type="text" id="inputPhoto" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-[#d9777f]">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium mb-1">Judul</label>
-                            <input type="text" id="inputTitle" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-[#d9777f]">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-medium mb-1">Isi Pesan</label>
-                            <textarea id="inputMessage" rows="4" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-[#d9777f]"></textarea>
-                        </div>
+                        <div><label class="block text-xs font-medium mb-1">Foto Utama</label><input type="text" id="inputPhoto" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-custom-rose"></div>
+                        <div><label class="block text-xs font-medium mb-1">Judul</label><input type="text" id="inputTitle" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-custom-rose"></div>
+                        <div><label class="block text-xs font-medium mb-1">Isi Pesan</label><textarea id="inputMessage" rows="4" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-custom-rose"></textarea></div>
                     </div>
                 </details>
 
                 <!-- Game -->
                 <details class="glass p-5 rounded-2xl cursor-pointer group">
-                    <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fas fa-heart w-5 text-[#d9777f] mr-2"></i> Game Pilihan</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
+                    <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fas fa-heart w-5 text-custom-rose mr-2"></i> Game Pilihan</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
                     <div class="mt-4 space-y-3 cursor-auto">
-                        <div>
-                            <label class="block text-xs font-medium mb-1">Judul Game</label>
-                            <input type="text" id="inputGameTitle" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-[#d9777f]">
-                        </div>
+                        <div><label class="block text-xs font-medium mb-1">Judul Game</label><input type="text" id="inputGameTitle" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-custom-rose"></div>
                         <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-xs font-medium mb-1 text-red-500">Foto Salah</label>
-                                <input type="text" id="inputPhotoWrong" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium mb-1 text-green-600">Foto Benar</label>
-                                <input type="text" id="inputPhotoCorrect" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium mb-1 text-red-500">Pesan Salah</label>
-                                <input type="text" id="inputMsgWrong" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-medium mb-1 text-green-600">Pesan Benar</label>
-                                <input type="text" id="inputMsgCorrect" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5">
-                            </div>
+                            <div><label class="block text-xs font-medium mb-1 text-red-500">Foto Kiri (Salah)</label><input type="text" id="inputPhotoWrong" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5"></div>
+                            <div><label class="block text-xs font-medium mb-1 text-green-600">Foto Kanan (Benar)</label><input type="text" id="inputPhotoCorrect" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5"></div>
+                            <div><label class="block text-xs font-medium mb-1 text-red-500">Pesan Salah</label><input type="text" id="inputMsgWrong" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5"></div>
+                            <div><label class="block text-xs font-medium mb-1 text-green-600">Pesan Benar</label><input type="text" id="inputMsgCorrect" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5"></div>
                         </div>
                     </div>
                 </details>
 
                 <!-- 3 Menu Spesial -->
                 <details class="glass p-5 rounded-2xl cursor-pointer group" open>
-                    <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fas fa-gift w-5 text-[#d9777f] mr-2"></i> Konten 3 Menu</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
+                    <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fas fa-gift w-5 text-custom-rose mr-2"></i> 3 Kotak Spesial</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
                     <div class="mt-4 space-y-5 cursor-auto border-t border-gray-100 pt-4">
-                        
-                        <!-- Gambar Card Menu -->
                         <div class="bg-white/50 p-4 rounded-xl border border-white">
-                            <h4 class="font-bold text-[#d9777f] mb-3 text-xs uppercase tracking-wider">Gambar Kartu Menu</h4>
+                            <h4 class="font-bold text-custom-rose mb-3 text-xs uppercase tracking-wider">Gambar Kartu Menu</h4>
                             <div class="space-y-2">
-                                <div><label class="block text-xs mb-1">Gambar Love (Card 1)</label><input type="text" id="inputMenuLoveImg" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs"></div>
-                                <div><label class="block text-xs mb-1">Gambar Buket (Card 2)</label><input type="text" id="inputMenuBouquetImg" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs"></div>
-                                <div><label class="block text-xs mb-1">Gambar Album (Card 3)</label><input type="text" id="inputMenuAlbumImg" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs"></div>
+                                <div><input type="text" id="inputMenuLoveImg" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Gambar Kotak Love"></div>
+                                <div><input type="text" id="inputMenuBouquetImg" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Gambar Kotak Buket"></div>
+                                <div><input type="text" id="inputMenuAlbumImg" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Gambar Kotak Album"></div>
                             </div>
                         </div>
-
-                        <!-- Love Detail -->
                         <div>
-                            <h4 class="font-medium text-gray-800 mb-1"><i class="fas fa-heart text-[#d9777f] mr-1"></i> Isi Menu 1 (Love)</h4>
+                            <h4 class="font-medium text-gray-800 mb-1"><i class="fas fa-heart text-custom-rose mr-1"></i> Pesan Menu Love</h4>
                             <textarea id="inputLoveMsg" rows="3" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5"></textarea>
                         </div>
-                        
-                        <!-- Buket Detail -->
                         <div>
-                            <h4 class="font-medium text-gray-800 mb-1"><i class="fas fa-seedling text-[#d9777f] mr-1"></i> Isi Menu 2 (Buket)</h4>
-                            <input type="text" id="inputBouquetImg" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 mb-2" placeholder="Link Foto Buket">
-                            <textarea id="inputBouquetMsg" rows="3" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5" placeholder="Makna bunga..."></textarea>
+                            <h4 class="font-medium text-gray-800 mb-1"><i class="fas fa-seedling text-custom-rose mr-1"></i> Pesan Menu Buket</h4>
+                            <input type="text" id="inputBouquetImg" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 mb-2" placeholder="Link Foto Buket Dalam">
+                            <textarea id="inputBouquetMsg" rows="3" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5"></textarea>
                         </div>
-
-                        <!-- Album Detail -->
                         <div>
-                            <h4 class="font-medium text-gray-800 mb-2"><i class="fas fa-images text-[#d9777f] mr-1"></i> Isi Menu 3 (Album 6 Foto)</h4>
+                            <h4 class="font-medium text-gray-800 mb-2"><i class="fas fa-images text-custom-rose mr-1"></i> Foto Menu Album (6)</h4>
                             <div class="grid grid-cols-2 gap-2">
-                                <input type="text" id="inputAlbum1" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Foto 1">
-                                <input type="text" id="inputAlbum2" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Foto 2">
-                                <input type="text" id="inputAlbum3" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Foto 3">
-                                <input type="text" id="inputAlbum4" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Foto 4">
-                                <input type="text" id="inputAlbum5" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Foto 5">
-                                <input type="text" id="inputAlbum6" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Foto 6">
+                                <input type="text" id="inputAlbum1" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Foto 1"><input type="text" id="inputAlbum2" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Foto 2">
+                                <input type="text" id="inputAlbum3" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Foto 3"><input type="text" id="inputAlbum4" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Foto 4">
+                                <input type="text" id="inputAlbum5" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Foto 5"><input type="text" id="inputAlbum6" class="w-full bg-white/80 border border-gray-200 rounded-lg p-2 text-xs" placeholder="Foto 6">
                             </div>
                         </div>
-
                     </div>
                 </details>
 
-                <!-- Pengaturan WhatsApp -->
+                <!-- WhatsApp -->
                 <details class="glass p-5 rounded-2xl cursor-pointer group">
-                    <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fab fa-whatsapp w-5 text-[#d9777f] mr-2"></i> Pengaturan WhatsApp</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
+                    <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fab fa-whatsapp w-5 text-custom-rose mr-2"></i> WhatsApp</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
                     <div class="mt-4 space-y-3 cursor-auto border-t border-gray-100 pt-4">
-                        <div>
-                            <label class="block text-xs font-medium mb-1">Nomor WhatsApp Tujuan</label>
-                            <input type="text" id="inputWaNumber" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-[#d9777f]" placeholder="+62 8xx-xxxx-xxxx">
-                            <p class="text-[10px] text-gray-500 mt-1">Pastikan menggunakan kode negara (contoh: +62)</p>
-                        </div>
+                        <div><label class="block text-xs font-medium mb-1">Nomor WA Anda</label><input type="text" id="inputWaNumber" class="w-full bg-white/80 border border-gray-200 rounded-xl p-2.5 focus:outline-none focus:border-custom-rose" placeholder="+62 8xx-xxxx-xxxx"></div>
                     </div>
                 </details>
 
                 <div class="flex gap-3 mt-8">
-                    <button onclick="window.saveSettings()" class="flex-1 btn-primary font-semibold py-3.5 px-4 rounded-xl">
-                        Simpan Perubahan
-                    </button>
-                    <button onclick="window.resetSettings()" class="glass-btn text-gray-600 font-semibold py-3.5 px-6 rounded-xl hover:text-red-500">
-                        Reset
-                    </button>
+                    <button id="btnSaveSetting" onclick="saveSettings()" class="flex-1 btn-primary font-semibold py-3.5 px-4 rounded-xl transition-all">Simpan Publik</button>
+                    <button onclick="resetSettings()" class="glass-btn text-gray-600 font-semibold py-3.5 px-6 rounded-xl hover:text-red-500">Reset</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Custom Pop-up Elegan -->
-    <div id="customAlert" class="fixed inset-0 z-[110] flex items-center justify-center bg-white/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <!-- Modal Peringatan / Interaksi -->
+    <div id="customAlert" class="fixed inset-0 z-[200] flex items-center justify-center bg-white/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
         <div id="customAlertContent" class="glass-panel p-10 rounded-3xl shadow-2xl text-center max-w-sm w-[90%] mx-4 transform scale-95 transition-transform duration-400 border border-white">
             <div id="alertEmoji" class="text-6xl mb-6">✨</div>
-            <h3 id="alertTitle" class="text-2xl font-bold text-[#d9777f] mb-3 lux-font italic">Pesan</h3>
+            <h3 id="alertTitle" class="text-2xl font-bold text-custom-rose mb-3 lux-font italic">Pesan</h3>
             <p id="alertMessage" class="text-gray-600 text-lg mb-8 leading-relaxed">Isi pesan...</p>
-            <button onclick="window.closeAlert()" class="btn-primary font-semibold py-3 px-10 rounded-full w-full">
-                <span id="alertBtnText">Tutup</span>
-            </button>
+            <button id="alertBtn" class="btn-primary font-semibold py-3 px-10 rounded-full w-full">Tutup</button>
         </div>
     </div>
 
-    <!-- MODAL KIRIM WHATSAPP DINAMIS -->
-    <div id="waModal" class="fixed inset-0 z-[120] flex items-center justify-center bg-white/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <!-- Modal WhatsApp -->
+    <div id="waModal" class="fixed inset-0 z-[200] flex items-center justify-center bg-white/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="glass-panel p-8 md:p-10 rounded-3xl shadow-2xl text-center max-w-sm w-[90%] mx-4 transform scale-95 transition-transform duration-400 border border-white relative">
-            <button onclick="window.closeWaModal()" class="absolute top-4 right-4 text-gray-400 hover:text-[#d9777f] transition-colors">
-                <i class="fas fa-times text-xl"></i>
-            </button>
+            <button onclick="closeWaModal()" class="absolute top-4 right-4 text-gray-400 hover:text-custom-rose transition-colors"><i class="fas fa-times text-xl"></i></button>
             <i class="fab fa-whatsapp text-5xl text-green-500 mb-4 drop-shadow-md"></i>
             <h3 class="text-2xl font-bold text-gray-800 mb-2 lux-font italic">Balas Pesanku</h3>
             <p class="text-gray-500 text-sm mb-6">Ketik pesan balasan untukku di bawah ini ya sayang ❤️</p>
-            
-            <textarea id="userWaMessage" rows="4" class="w-full bg-white border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-[#d9777f] focus:ring-2 focus:ring-rose-100 text-gray-700 mb-6 placeholder-gray-300" placeholder="Ketik pesanmu di sini..."></textarea>
-            
-            <button onclick="window.sendDynamicWhatsApp()" class="btn-primary font-semibold py-3 px-8 rounded-full w-full flex justify-center items-center">
-                Kirim via WA <i class="fas fa-paper-plane ml-2"></i>
-            </button>
+            <textarea id="userWaMessage" rows="4" class="w-full bg-white border border-gray-200 rounded-xl p-3 focus:outline-none focus:border-custom-rose text-gray-700 mb-6" placeholder="Aku sayang kamu..."></textarea>
+            <button onclick="sendDynamicWhatsApp()" class="btn-primary font-semibold py-3 px-8 rounded-full w-full flex justify-center items-center">Kirim via WA <i class="fas fa-paper-plane ml-2"></i></button>
         </div>
     </div>
 
     <!-- SCREEN 1: Layar Kunci -->
-    <div id="lockScreen" class="flex flex-col items-center justify-center page-transition visible-page">
+    <div id="lockScreen" class="flex flex-col items-center justify-center page-transition visible-page z-20">
         <div class="text-center mb-8 mt-10">
-            <i class="fas fa-lock text-3xl text-[#d9777f] mb-3 drop-shadow-md opacity-80"></i>
+            <i class="fas fa-lock text-3xl text-custom-rose mb-3 drop-shadow-md opacity-80"></i>
             <h2 class="text-xl font-medium text-gray-700 tracking-wider font-sans">Masukkan PIN Kamu</h2>
             <p class="text-sm text-gray-500 mt-1 font-sans">tanggal lahir kamu</p>
         </div>
         <div id="pinDots" class="flex gap-5 mb-12">
-            <div class="pin-dot w-3 h-3 rounded-full border border-[#d9777f]/50 bg-transparent transition-colors"></div>
-            <div class="pin-dot w-3 h-3 rounded-full border border-[#d9777f]/50 bg-transparent transition-colors"></div>
-            <div class="pin-dot w-3 h-3 rounded-full border border-[#d9777f]/50 bg-transparent transition-colors"></div>
-            <div class="pin-dot w-3 h-3 rounded-full border border-[#d9777f]/50 bg-transparent transition-colors"></div>
-            <div class="pin-dot w-3 h-3 rounded-full border border-[#d9777f]/50 bg-transparent transition-colors"></div>
-            <div class="pin-dot w-3 h-3 rounded-full border border-[#d9777f]/50 bg-transparent transition-colors"></div>
-            <div class="pin-dot w-3 h-3 rounded-full border border-[#d9777f]/50 bg-transparent transition-colors"></div>
-            <div class="pin-dot w-3 h-3 rounded-full border border-[#d9777f]/50 bg-transparent transition-colors"></div>
+            <div class="pin-dot w-3.5 h-3.5 rounded-full border border-custom-rose bg-transparent transition-colors"></div>
+            <div class="pin-dot w-3.5 h-3.5 rounded-full border border-custom-rose bg-transparent transition-colors"></div>
+            <div class="pin-dot w-3.5 h-3.5 rounded-full border border-custom-rose bg-transparent transition-colors"></div>
+            <div class="pin-dot w-3.5 h-3.5 rounded-full border border-custom-rose bg-transparent transition-colors"></div>
+            <div class="pin-dot w-3.5 h-3.5 rounded-full border border-custom-rose bg-transparent transition-colors"></div>
+            <div class="pin-dot w-3.5 h-3.5 rounded-full border border-custom-rose bg-transparent transition-colors"></div>
+            <div class="pin-dot w-3.5 h-3.5 rounded-full border border-custom-rose bg-transparent transition-colors"></div>
+            <div class="pin-dot w-3.5 h-3.5 rounded-full border border-custom-rose bg-transparent transition-colors"></div>
         </div>
         <!-- Numpad -->
         <div class="grid grid-cols-3 gap-x-10 gap-y-6 max-w-[300px] mx-auto pb-10">
-            <button onclick="window.addPin('1')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light">1</button>
-            <button onclick="window.addPin('2')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">2<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">ABC</span></button>
-            <button onclick="window.addPin('3')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">3<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">DEF</span></button>
-            <button onclick="window.addPin('4')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">4<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">GHI</span></button>
-            <button onclick="window.addPin('5')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">5<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">JKL</span></button>
-            <button onclick="window.addPin('6')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">6<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">MNO</span></button>
-            <button onclick="window.addPin('7')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">7<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">PQRS</span></button>
-            <button onclick="window.addPin('8')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">8<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">TUV</span></button>
-            <button onclick="window.addPin('9')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">9<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">WXYZ</span></button>
+            <button onclick="addPin('1')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light">1</button>
+            <button onclick="addPin('2')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">2<span class="text-[9px] tracking-widest text-gray-400 mt-1">ABC</span></button>
+            <button onclick="addPin('3')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">3<span class="text-[9px] tracking-widest text-gray-400 mt-1">DEF</span></button>
+            <button onclick="addPin('4')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">4<span class="text-[9px] tracking-widest text-gray-400 mt-1">GHI</span></button>
+            <button onclick="addPin('5')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">5<span class="text-[9px] tracking-widest text-gray-400 mt-1">JKL</span></button>
+            <button onclick="addPin('6')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">6<span class="text-[9px] tracking-widest text-gray-400 mt-1">MNO</span></button>
+            <button onclick="addPin('7')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">7<span class="text-[9px] tracking-widest text-gray-400 mt-1">PQRS</span></button>
+            <button onclick="addPin('8')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">8<span class="text-[9px] tracking-widest text-gray-400 mt-1">TUV</span></button>
+            <button onclick="addPin('9')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">9<span class="text-[9px] tracking-widest text-gray-400 mt-1">WXYZ</span></button>
             <div></div>
-            <button onclick="window.addPin('0')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light">0</button>
-            <button onclick="window.deletePin()" class="w-20 h-20 rounded-full bg-transparent text-gray-400 text-2xl flex items-center justify-center hover:text-[#d9777f] transition-colors"><i class="fas fa-backspace"></i></button>
+            <button onclick="addPin('0')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light">0</button>
+            <button onclick="deletePin()" class="w-20 h-20 rounded-full bg-transparent text-gray-400 text-2xl flex items-center justify-center hover:text-custom-rose transition-colors"><i class="fas fa-backspace"></i></button>
         </div>
     </div>
 
-    <!-- SCREEN 2: Layar Kado (Hadiah Kotak Pink) -->
+    <!-- SCREEN 2: Layar Kado -->
     <div id="startScreen" class="flex flex-col items-center justify-center page-transition hidden-page">
-        <div class="text-center cursor-pointer glass p-12 rounded-[3rem] hover:scale-105 transition-transform duration-500" onclick="window.openSurprise()">
+        <div class="text-center cursor-pointer glass p-12 rounded-[3rem] hover:scale-105 transition-transform duration-500" onclick="openSurprise()">
             <div class="relative w-40 h-40 mx-auto mb-8 flex justify-center items-center">
-                <!-- SVG Kotak Kado Cantik Seperti di Screenshot User -->
-                <svg viewBox="0 0 24 24" fill="#ec4899" width="120" height="120" class="drop-shadow-lg hover:rotate-3 transition-transform duration-300">
-                    <path d="M22 6h-4.18c.11-.31.18-.65.18-1 0-1.66-1.34-3-3-3-1.07 0-2.02.57-2.5 1.43C12.02 2.57 11.07 2 10 2 8.34 2 7 3.34 7 5c0 .35.07.69.18 1H3c-1.1 0-2 .9-2 2v3c0 1.1.9 2 2 2h1v8c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-8h1c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zM10 4c.55 0 1 .45 1 1s-.45 1-1 1H8.53C8.84 4.88 9.38 4 10 4zm4 0c.62 0 1.16.88 1.47 2H14c-.55 0-1-.45-1-1s.45-1 1-1zm-1 16H7v-8h6v8zm6 0h-6v-8h6v8zm1-10H4V8h16v2z" />
-                </svg>
+                <i class="fas fa-gift text-[8rem] text-custom-rose drop-shadow-lg hover:rotate-3 transition-transform duration-300"></i>
             </div>
             <h1 class="lux-font italic text-3xl md:text-4xl text-gray-700 mb-4">A Special Gift for You</h1>
-            <p class="text-sm tracking-widest uppercase text-[#d9777f] font-semibold mt-4">Tap to Open</p>
+            <p class="text-sm tracking-widest uppercase text-custom-rose font-semibold mt-4">Tap to Open</p>
         </div>
     </div>
 
@@ -400,503 +322,312 @@
     <div id="mainContent" class="flex flex-col items-center justify-center p-6 page-transition hidden-page">
         <div class="glass p-8 md:p-12 rounded-[3rem] max-w-xl w-full text-center relative z-10 my-auto">
             <div class="relative w-44 h-44 mx-auto mb-8 group">
-                <div class="absolute inset-0 bg-[#d9777f] rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+                <div class="absolute inset-0 bg-custom-rose rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
                 <img id="displayPhoto" src="" alt="Foto Utama" class="relative w-full h-full object-cover rounded-full border-[6px] border-white shadow-xl transition-transform group-hover:scale-105">
             </div>
-            <h1 id="displayTitle" class="lux-font italic font-semibold text-3xl md:text-4xl text-[#d9777f] mb-6">Happy Birthday</h1>
+            <h1 id="displayTitle" class="lux-font italic font-semibold text-3xl md:text-4xl text-custom-rose mb-6">Happy Birthday</h1>
             <div class="bg-white/60 p-6 rounded-3xl border border-white shadow-sm mb-10">
                 <p id="displayMessage" class="text-gray-600 font-medium text-[15px] md:text-base leading-loose whitespace-pre-line text-left">Pesan memuat...</p>
             </div>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4">
-                <!-- Quit Berlari -->
-                <button class="runaway-btn glass-btn text-gray-500 font-semibold py-3.5 px-8 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase" onmouseover="window.moveBtn(this, 'mainContent')" ontouchstart="window.moveBtn(this, 'mainContent')">Quit</button>
-                <button onclick="window.switchScreen('mainContent', 'gameScreen')" class="btn-primary py-3.5 px-10 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase font-semibold flex justify-center items-center">Lanjut <i class="fas fa-chevron-right ml-3 text-xs"></i></button>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4 relative min-h-[60px]">
+                <button class="runaway-btn glass-btn text-gray-500 font-semibold py-3.5 px-8 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase" onmouseover="moveBtn(this, 'mainContent')" ontouchstart="moveBtn(this, 'mainContent')">Quit</button>
+                <button onclick="switchScreen('mainContent', 'gameScreen')" class="btn-primary py-3.5 px-10 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase font-semibold flex justify-center items-center z-10">Lanjut <i class="fas fa-chevron-right ml-3 text-xs"></i></button>
             </div>
         </div>
     </div>
 
-    <!-- SCREEN 4: Game (Hanya Lanjut Jika Benar) -->
-    <div id="gameScreen" class="flex flex-col items-center justify-center p-6 page-transition hidden-page">
-        <div class="glass p-8 md:p-12 rounded-[3rem] max-w-2xl w-full text-center relative z-10 my-auto">
-            <h1 id="displayGameTitle" class="lux-font italic text-3xl text-[#d9777f] mb-3">Tebak Game</h1>
+    <!-- SCREEN 4: Game (Wajib Pilih Benar) -->
+    <div id="gameScreen" class="flex flex-col items-center justify-center p-6 page-transition hidden-page z-20">
+        <div class="glass p-8 md:p-12 rounded-[3rem] max-w-2xl w-full text-center relative my-auto">
+            <h1 id="displayGameTitle" class="lux-font italic text-3xl text-custom-rose mb-3">Tebak Game</h1>
             <p class="text-gray-400 font-medium mb-10 text-sm">Pilih dengan hatimu... 👀</p>
             
             <div class="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-12 mb-6">
-                <!-- Foto Salah -->
-                <div class="cursor-pointer group flex flex-col items-center" onclick="window.handleWrong()">
+                <!-- Foto Kiri Salah -->
+                <div class="cursor-pointer group flex flex-col items-center" onclick="handleWrong()">
                     <div class="relative w-40 h-40 mb-3">
                         <img id="displayPhotoWrong" src="" class="w-full h-full object-cover rounded-full border-[4px] border-white shadow-lg group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100 filter grayscale group-hover:grayscale-0">
                     </div>
                 </div>
-                <div class="text-[#d9777f] font-light text-2xl lux-font italic opacity-50">vs</div>
-                <!-- Foto Benar (Tombol Lanjut Dipicu Dari Sini) -->
-                <div class="cursor-pointer group flex flex-col items-center" onclick="window.handleCorrect()">
+                <div class="text-custom-rose font-light text-2xl lux-font italic opacity-50">vs</div>
+                <!-- Foto Kanan Benar (Memicu Next Lanjut) -->
+                <div class="cursor-pointer group flex flex-col items-center" onclick="handleCorrect()">
                     <div class="relative w-40 h-40 mb-3">
                         <img id="displayPhotoCorrect" src="" class="w-full h-full object-cover rounded-full border-[4px] border-white shadow-lg group-hover:scale-105 transition-transform duration-300">
                     </div>
                 </div>
             </div>
-            <p class="text-xs text-[#d9777f]/70 italic mt-4">*Klik foto yang benar untuk melanjutkan</p>
+            <p class="text-xs text-custom-rose opacity-70 italic mt-6">*Klik foto yang benar untuk melanjutkan ke hadiah spesial</p>
         </div>
     </div>
 
-    <!-- SCREEN 5: Menu 3 Pilihan Mewah -->
+    <!-- SCREEN 5: Menu Kotak -->
     <div id="menuScreen" class="flex flex-col items-center justify-center p-6 page-transition hidden-page">
         <div class="text-center z-10 w-full max-w-5xl">
-            <h1 class="lux-font italic font-semibold text-3xl md:text-5xl text-[#c9666e] mb-12 drop-shadow-sm">
-                The Special Boxes
-            </h1>
-            
+            <h1 class="lux-font italic font-semibold text-3xl md:text-5xl text-[#c9666e] mb-12 drop-shadow-sm">The Special Boxes</h1>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 px-2 mb-10">
-                
-                <!-- Menu 1 -->
-                <div onclick="window.openMenuDetail('love', 'loveScreen')" class="glass bg-white/70 p-8 rounded-[2.5rem] cursor-pointer hover:-translate-y-2 transition-all duration-300 flex flex-col items-center group">
-                    <div class="relative w-32 h-32 mb-6 rounded-full overflow-hidden border-[6px] border-white shadow-md group-hover:shadow-xl transition-shadow">
-                        <img id="dispMenuLoveImg" src="" alt="Menu 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
+                <div onclick="openMenuDetail('love', 'loveScreen')" class="glass bg-white/70 p-8 rounded-[2.5rem] cursor-pointer hover:-translate-y-2 transition-all duration-300 flex flex-col items-center group">
+                    <div class="relative w-32 h-32 mb-6 rounded-full overflow-hidden border-[6px] border-white shadow-md group-hover:shadow-xl transition-shadow"><img id="dispMenuLoveImg" src="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"></div>
                     <h2 class="text-2xl font-semibold text-gray-800 mb-2 lux-font italic">Love</h2>
                     <p class="text-gray-400 text-sm font-medium">Surat untukmu</p>
                 </div>
-
-                <!-- Menu 2 -->
-                <div onclick="window.openMenuDetail('bouquet', 'bouquetScreen')" class="glass bg-white/70 p-8 rounded-[2.5rem] cursor-pointer hover:-translate-y-2 transition-all duration-300 flex flex-col items-center group">
-                    <div class="relative w-32 h-32 mb-6 rounded-full overflow-hidden border-[6px] border-white shadow-md group-hover:shadow-xl transition-shadow">
-                        <img id="dispMenuBouquetImg" src="" alt="Menu 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
+                <div onclick="openMenuDetail('bouquet', 'bouquetScreen')" class="glass bg-white/70 p-8 rounded-[2.5rem] cursor-pointer hover:-translate-y-2 transition-all duration-300 flex flex-col items-center group">
+                    <div class="relative w-32 h-32 mb-6 rounded-full overflow-hidden border-[6px] border-white shadow-md group-hover:shadow-xl transition-shadow"><img id="dispMenuBouquetImg" src="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"></div>
                     <h2 class="text-2xl font-semibold text-gray-800 mb-2 lux-font italic">Bouquet</h2>
                     <p class="text-gray-400 text-sm font-medium">Makna bunga</p>
                 </div>
-
-                <!-- Menu 3 -->
-                <div onclick="window.openMenuDetail('album', 'albumScreen')" class="glass bg-white/70 p-8 rounded-[2.5rem] cursor-pointer hover:-translate-y-2 transition-all duration-300 flex flex-col items-center group">
-                    <div class="relative w-32 h-32 mb-6 rounded-full overflow-hidden border-[6px] border-white shadow-md group-hover:shadow-xl transition-shadow">
-                        <img id="dispMenuAlbumImg" src="" alt="Menu 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                    </div>
+                <div onclick="openMenuDetail('album', 'albumScreen')" class="glass bg-white/70 p-8 rounded-[2.5rem] cursor-pointer hover:-translate-y-2 transition-all duration-300 flex flex-col items-center group">
+                    <div class="relative w-32 h-32 mb-6 rounded-full overflow-hidden border-[6px] border-white shadow-md group-hover:shadow-xl transition-shadow"><img id="dispMenuAlbumImg" src="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"></div>
                     <h2 class="text-2xl font-semibold text-gray-800 mb-2 lux-font italic">Memories</h2>
                     <p class="text-gray-400 text-sm font-medium">Galeri kita</p>
                 </div>
-
             </div>
-
-            <!-- Tombol Kirim Pesan (WhatsApp) - Membuka Modal Input -->
-            <button id="waButton" class="bg-gray-300 text-gray-500 cursor-not-allowed font-semibold py-4 px-10 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase transition-all duration-500 shadow-md flex justify-center items-center mx-auto" onclick="window.openWaModal()">
+            <button id="waButton" class="bg-gray-300 text-gray-500 cursor-not-allowed font-semibold py-4 px-10 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase transition-all duration-500 shadow-md flex justify-center items-center mx-auto" onclick="openWaModal()">
                 Buka 3 kotak dulu ya... <i class="fas fa-lock ml-3"></i>
             </button>
         </div>
     </div>
 
-    <!-- SCREEN 6: LOVE Detail -->
-    <div id="loveScreen" class="flex items-center justify-center p-6 page-transition hidden-page">
-        <button onclick="window.switchScreen('loveScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-[#d9777f] text-lg">
-            <i class="fas fa-arrow-left"></i>
-        </button>
-        <div class="glass-panel p-10 md:p-16 rounded-[3rem] max-w-2xl w-full text-center relative z-10 border border-white">
-            <i class="fas fa-envelope-open-text text-4xl text-[#d9777f] mb-6 opacity-80"></i>
+    <!-- SCREEN 6: LOVE -->
+    <div id="loveScreen" class="flex items-center justify-center p-6 page-transition hidden-page z-20">
+        <button onclick="switchScreen('loveScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-custom-rose text-lg"><i class="fas fa-arrow-left"></i></button>
+        <div class="glass-panel p-10 md:p-16 rounded-[3rem] max-w-2xl w-full text-center relative border border-white">
+            <i class="fas fa-envelope-open-text text-4xl text-custom-rose mb-6 opacity-80"></i>
             <h1 class="lux-font italic text-3xl md:text-4xl text-gray-800 mb-8">Letter of Love</h1>
-            <p id="displayLoveMsg" class="text-gray-600 font-medium text-base md:text-lg leading-loose whitespace-pre-line text-left">
-                Memuat pesan cinta...
-            </p>
+            <p id="displayLoveMsg" class="text-gray-600 font-medium text-base md:text-lg leading-loose whitespace-pre-line text-left"></p>
         </div>
     </div>
 
-    <!-- SCREEN 7: BUKET Detail -->
-    <div id="bouquetScreen" class="flex items-center justify-center p-6 md:p-10 page-transition hidden-page">
-        <button onclick="window.switchScreen('bouquetScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-[#d9777f] text-lg">
-            <i class="fas fa-arrow-left"></i>
-        </button>
-        <div class="glass-panel p-8 md:p-12 rounded-[3rem] max-w-5xl w-full relative z-10 border border-white flex flex-col md:flex-row items-center gap-12">
+    <!-- SCREEN 7: BUKET -->
+    <div id="bouquetScreen" class="flex items-center justify-center p-6 md:p-10 page-transition hidden-page z-20">
+        <button onclick="switchScreen('bouquetScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-custom-rose text-lg"><i class="fas fa-arrow-left"></i></button>
+        <div class="glass-panel p-8 md:p-12 rounded-[3rem] max-w-5xl w-full relative border border-white flex flex-col md:flex-row items-center gap-12">
             <div class="flex-1 text-center md:text-left order-2 md:order-1">
                 <h1 class="lux-font italic text-3xl md:text-4xl text-gray-800 mb-6">The Bouquet</h1>
-                <p id="displayBouquetMsg" class="text-gray-600 font-medium text-base md:text-lg leading-loose whitespace-pre-line">
-                    Memuat pesan buket...
-                </p>
+                <p id="displayBouquetMsg" class="text-gray-600 font-medium text-base md:text-lg leading-loose whitespace-pre-line"></p>
             </div>
             <div class="flex-1 order-1 md:order-2 w-full">
                 <div class="relative w-full aspect-[4/5] max-w-sm mx-auto">
-                    <img id="displayBouquetDetailImg" src="" alt="Detail Buket" class="relative w-full h-full object-cover rounded-3xl border-8 border-white shadow-[0_15px_30px_rgba(0,0,0,0.1)] -rotate-2">
+                    <img id="displayBouquetDetailImg" src="" class="relative w-full h-full object-cover rounded-3xl border-8 border-white shadow-[0_15px_30px_rgba(0,0,0,0.1)] -rotate-2">
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SCREEN 8: ALBUM Detail -->
-    <div id="albumScreen" class="flex flex-col p-6 md:p-10 page-transition hidden-page overflow-y-auto">
-        <button onclick="window.switchScreen('albumScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-[#d9777f] text-lg">
-            <i class="fas fa-arrow-left"></i>
-        </button>
-        
+    <!-- SCREEN 8: ALBUM -->
+    <div id="albumScreen" class="flex flex-col p-6 md:p-10 page-transition hidden-page overflow-y-auto z-20">
+        <button onclick="switchScreen('albumScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-custom-rose text-lg"><i class="fas fa-arrow-left"></i></button>
         <div class="text-center z-10 mt-12 md:mt-4 mb-14 w-full">
             <h1 class="lux-font italic font-semibold text-3xl md:text-5xl text-gray-800 mb-4">Our Memories</h1>
             <p class="text-gray-400 font-medium tracking-widest uppercase text-xs">A collection of moments</p>
         </div>
-
         <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 max-w-5xl mx-auto z-10 pb-20 w-full">
-            <!-- 6 Polaroid Elegan -->
-            <div class="polaroid" style="transform: rotate(-2deg) translateY(5px);">
-                <img id="dispAlb1" src="" class="w-full h-44 md:h-64 object-cover mb-4">
-                <p class="text-center lux-font italic text-gray-500">Moment I</p>
-            </div>
-            <div class="polaroid" style="transform: rotate(2deg) translateY(-5px);">
-                <img id="dispAlb2" src="" class="w-full h-44 md:h-64 object-cover mb-4">
-                <p class="text-center lux-font italic text-gray-500">Moment II</p>
-            </div>
-            <div class="polaroid" style="transform: rotate(-1deg) translateY(10px);">
-                <img id="dispAlb3" src="" class="w-full h-44 md:h-64 object-cover mb-4">
-                <p class="text-center lux-font italic text-gray-500">Moment III</p>
-            </div>
-            <div class="polaroid" style="transform: rotate(3deg) translateY(0px);">
-                <img id="dispAlb4" src="" class="w-full h-44 md:h-64 object-cover mb-4">
-                <p class="text-center lux-font italic text-gray-500">Moment IV</p>
-            </div>
-            <div class="polaroid" style="transform: rotate(-3deg) translateY(8px);">
-                <img id="dispAlb5" src="" class="w-full h-44 md:h-64 object-cover mb-4">
-                <p class="text-center lux-font italic text-gray-500">Moment V</p>
-            </div>
-            <div class="polaroid" style="transform: rotate(1deg) translateY(-2px);">
-                <img id="dispAlb6" src="" class="w-full h-44 md:h-64 object-cover mb-4">
-                <p class="text-center lux-font italic text-gray-500">Moment VI</p>
-            </div>
+            <div class="polaroid" style="transform: rotate(-2deg) translateY(5px);"><img id="dispAlb1" src="" class="w-full h-44 md:h-64 object-cover mb-4"><p class="text-center lux-font italic text-gray-500">Moment I</p></div>
+            <div class="polaroid" style="transform: rotate(2deg) translateY(-5px);"><img id="dispAlb2" src="" class="w-full h-44 md:h-64 object-cover mb-4"><p class="text-center lux-font italic text-gray-500">Moment II</p></div>
+            <div class="polaroid" style="transform: rotate(-1deg) translateY(10px);"><img id="dispAlb3" src="" class="w-full h-44 md:h-64 object-cover mb-4"><p class="text-center lux-font italic text-gray-500">Moment III</p></div>
+            <div class="polaroid" style="transform: rotate(3deg) translateY(0px);"><img id="dispAlb4" src="" class="w-full h-44 md:h-64 object-cover mb-4"><p class="text-center lux-font italic text-gray-500">Moment IV</p></div>
+            <div class="polaroid" style="transform: rotate(-3deg) translateY(8px);"><img id="dispAlb5" src="" class="w-full h-44 md:h-64 object-cover mb-4"><p class="text-center lux-font italic text-gray-500">Moment V</p></div>
+            <div class="polaroid" style="transform: rotate(1deg) translateY(-2px);"><img id="dispAlb6" src="" class="w-full h-44 md:h-64 object-cover mb-4"><p class="text-center lux-font italic text-gray-500">Moment VI</p></div>
         </div>
     </div>
 
-    <!-- PENGATURAN JS GLOBAL DI LUAR MODULE AGAR DIJAMIN BISA DIKLIK -->
+    <!-- JS GLOBAL (Di luar module agar selalu terhubung ke HTML) -->
     <script>
-        // --- DATA DEFAULT MEWAH & ELEGAN ---
-        window.defaultData = {
-            pin: '04092007',
-            wrongPinMsg: 'Passcode salah sayang, ayo ingat-ingat lagi 🤪',
-            music: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
-            photo: 'https://images.unsplash.com/photo-1518199266791-5375a83164ba?auto=format&fit=crop&w=400&q=80',
-            title: 'Happy Birthday Sayang',
-            message: 'Di hari spesial ini, aku cuma mau bilang betapa bersyukurnya aku memilikimu. Kamu adalah hal terindah yang pernah terjadi dalam hidupku.\n\nSemoga kebahagiaan selalu menyertai setiap langkahmu. Aku akan selalu ada di sini, mencintaimu lebih dari hari kemarin. 🤍',
-            
-            gameTitle: 'Pilih Masa Depanmu',
-            photoWrong: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80', 
-            photoCorrect: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80', 
-            msgWrong: 'Oops, sepertinya kamu salah pilih. 🙈',
-            msgCorrect: 'Pilihan yang tepat! Aku padamu sayang. 🥰',
-
-            menuLoveImg: 'https://images.unsplash.com/photo-1518192620713-fb1ecab73552?auto=format&fit=crop&w=400&q=80',
-            menuBouquetImg: 'https://images.unsplash.com/photo-1582791694776-905e9ce6dcc0?auto=format&fit=crop&w=400&q=80',
-            menuAlbumImg: 'https://images.unsplash.com/photo-1526178613552-2b45c6c302f0?auto=format&fit=crop&w=400&q=80',
-
+        const defaultData = {
+            pin: '04092007', wrongPinMsg: 'Passcode salah. Silakan coba lagi 🤪',
+            music: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3', photo: 'https://images.unsplash.com/photo-1518199266791-5375a83164ba?auto=format&fit=crop&w=400&q=80',
+            title: 'Happy Birthday Sayang', message: 'Di hari spesial ini, aku cuma mau bilang betapa bersyukurnya aku memilikimu. Kamu adalah hal terindah yang pernah terjadi dalam hidupku.\n\nSemoga kebahagiaan selalu menyertai setiap langkahmu. Aku akan selalu ada di sini, mencintaimu lebih dari hari kemarin. 🤍',
+            gameTitle: 'Pilih Masa Depanmu', photoWrong: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80', photoCorrect: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80', 
+            msgWrong: 'Oops, sepertinya kamu salah pilih. Matanya siwer ya? 🙈', msgCorrect: 'Pilihan yang tepat! Aku padamu sayang. 🥰',
+            menuLoveImg: 'https://images.unsplash.com/photo-1518192620713-fb1ecab73552?auto=format&fit=crop&w=400&q=80', menuBouquetImg: 'https://images.unsplash.com/photo-1582791694776-905e9ce6dcc0?auto=format&fit=crop&w=400&q=80', menuAlbumImg: 'https://images.unsplash.com/photo-1526178613552-2b45c6c302f0?auto=format&fit=crop&w=400&q=80',
             loveMsg: 'Setiap detik bersamamu adalah anugerah terindah.\nTerima kasih karena selalu membuatku tersenyum, mendukungku, dan menjadi rumah untuk hatiku.\n\nAku berjanji akan selalu menggenggam tanganmu, di setiap suka maupun duka. I love you, now and forever. 🤍✨',
-            
-            bouquetImg: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80',
-            bouquetMsg: 'Mawar Merah melambangkan cinta sejati dan rasa hormat yang mendalam.\n\nMawar Pink melambangkan kelembutan, keanggunan, dan rasa syukurku memilikimu.\n\nSemoga hari-harimu selalu cantik dan semekar bunga ini sayang. 🌸',
-
-            album1: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80',
-            album2: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=400&q=80',
-            album3: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=400&q=80',
-            album4: 'https://images.unsplash.com/photo-1518599904199-0ca897819ddb?auto=format&fit=crop&w=400&q=80',
-            album5: 'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=400&q=80',
-            album6: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=400&q=80',
-
+            bouquetImg: 'https://images.unsplash.com/photo-1561181286-d3fee7d55364?auto=format&fit=crop&w=600&q=80', bouquetMsg: 'Mawar Merah melambangkan cinta sejati dan rasa hormat yang mendalam.\n\nMawar Pink melambangkan kelembutan, keanggunan, dan rasa syukurku memilikimu.\n\nSemoga hari-harimu selalu cantik dan semekar bunga ini sayang. 🌸',
+            album1: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=400&q=80', album2: 'https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?auto=format&fit=crop&w=400&q=80', album3: 'https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=400&q=80', album4: 'https://images.unsplash.com/photo-1518599904199-0ca897819ddb?auto=format&fit=crop&w=400&q=80', album5: 'https://images.unsplash.com/photo-1494774157365-9e04c6720e47?auto=format&fit=crop&w=400&q=80', album6: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?auto=format&fit=crop&w=400&q=80',
             waNumber: '+6282121560912'
         };
 
-        window.appData = { ...window.defaultData };
-        window.currentPin = '';
-        window.MAX_PIN_LENGTH = 8;
-        window.menuStatus = { love: false, bouquet: false, album: false };
+        let appData = { ...defaultData };
+        let currentPin = '';
+        const MAX_PIN_LENGTH = 8;
+        let menuStatus = { love: false, bouquet: false, album: false };
 
-        // Variabel Firebase State
+        // Variabel untuk bridge ke Firebase
         window.isFirebaseReady = false;
-        window.db = null;
-        window.currentUser = null;
-        window.appId = typeof __app_id !== 'undefined' ? __app_id : 'default-birthday-app-id';
+        window.saveToCloudFn = null;
 
-        // --- FUNGSI UI UTAMA ---
-        window.convertDriveLink = function(url) {
+        function convertDriveLink(url) {
             if (!url) return '';
             const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)\//) || url.match(/id=([a-zA-Z0-9_-]+)/);
             if (match && match[1]) return `https://drive.google.com/uc?export=view&id=${match[1]}`;
             return url;
-        };
+        }
 
-        window.populateForm = function() {
-            document.getElementById('inputPin').value = window.appData.pin;
-            document.getElementById('inputWrongPinMsg').value = window.appData.wrongPinMsg;
-            document.getElementById('inputMusic').value = window.appData.music;
-            document.getElementById('inputPhoto').value = window.appData.photo;
-            document.getElementById('inputTitle').value = window.appData.title;
-            document.getElementById('inputMessage').value = window.appData.message;
-            document.getElementById('inputGameTitle').value = window.appData.gameTitle;
-            document.getElementById('inputPhotoWrong').value = window.appData.photoWrong;
-            document.getElementById('inputMsgWrong').value = window.appData.msgWrong;
-            document.getElementById('inputPhotoCorrect').value = window.appData.photoCorrect;
-            document.getElementById('inputMsgCorrect').value = window.appData.msgCorrect;
-            document.getElementById('inputMenuLoveImg').value = window.appData.menuLoveImg;
-            document.getElementById('inputMenuBouquetImg').value = window.appData.menuBouquetImg;
-            document.getElementById('inputMenuAlbumImg').value = window.appData.menuAlbumImg;
-            document.getElementById('inputLoveMsg').value = window.appData.loveMsg;
-            document.getElementById('inputBouquetImg').value = window.appData.bouquetImg;
-            document.getElementById('inputBouquetMsg').value = window.appData.bouquetMsg;
-            document.getElementById('inputWaNumber').value = window.appData.waNumber;
-            for(let i=1; i<=6; i++) {
-                document.getElementById(`inputAlbum${i}`).value = window.appData[`album${i}`];
-            }
-        };
+        function populateForm() {
+            document.getElementById('inputPin').value = appData.pin; document.getElementById('inputWrongPinMsg').value = appData.wrongPinMsg; document.getElementById('inputMusic').value = appData.music; document.getElementById('inputPhoto').value = appData.photo; document.getElementById('inputTitle').value = appData.title; document.getElementById('inputMessage').value = appData.message;
+            document.getElementById('inputGameTitle').value = appData.gameTitle; document.getElementById('inputPhotoWrong').value = appData.photoWrong; document.getElementById('inputMsgWrong').value = appData.msgWrong; document.getElementById('inputPhotoCorrect').value = appData.photoCorrect; document.getElementById('inputMsgCorrect').value = appData.msgCorrect;
+            document.getElementById('inputMenuLoveImg').value = appData.menuLoveImg; document.getElementById('inputMenuBouquetImg').value = appData.menuBouquetImg; document.getElementById('inputMenuAlbumImg').value = appData.menuAlbumImg;
+            document.getElementById('inputLoveMsg').value = appData.loveMsg; document.getElementById('inputBouquetImg').value = appData.bouquetImg; document.getElementById('inputBouquetMsg').value = appData.bouquetMsg; document.getElementById('inputWaNumber').value = appData.waNumber;
+            for(let i=1; i<=6; i++) document.getElementById(`inputAlbum${i}`).value = appData[`album${i}`];
+        }
 
-        window.applySettings = function() {
-            document.getElementById('bgMusic').src = window.convertDriveLink(window.appData.music);
-            document.getElementById('displayPhoto').src = window.convertDriveLink(window.appData.photo);
-            document.getElementById('displayTitle').textContent = window.appData.title;
-            document.getElementById('displayMessage').textContent = window.appData.message;
-            document.getElementById('displayGameTitle').textContent = window.appData.gameTitle;
-            document.getElementById('displayPhotoWrong').src = window.convertDriveLink(window.appData.photoWrong);
-            document.getElementById('displayPhotoCorrect').src = window.convertDriveLink(window.appData.photoCorrect);
-            document.getElementById('dispMenuLoveImg').src = window.convertDriveLink(window.appData.menuLoveImg);
-            document.getElementById('dispMenuBouquetImg').src = window.convertDriveLink(window.appData.menuBouquetImg);
-            document.getElementById('dispMenuAlbumImg').src = window.convertDriveLink(window.appData.menuAlbumImg);
-            document.getElementById('displayLoveMsg').textContent = window.appData.loveMsg;
-            document.getElementById('displayBouquetDetailImg').src = window.convertDriveLink(window.appData.bouquetImg);
-            document.getElementById('displayBouquetMsg').textContent = window.appData.bouquetMsg;
-            for(let i=1; i<=6; i++) {
-                document.getElementById(`dispAlb${i}`).src = window.convertDriveLink(window.appData[`album${i}`]);
-            }
-        };
+        function applySettings() {
+            document.getElementById('bgMusic').src = convertDriveLink(appData.music); document.getElementById('displayPhoto').src = convertDriveLink(appData.photo); document.getElementById('displayTitle').textContent = appData.title; document.getElementById('displayMessage').textContent = appData.message;
+            document.getElementById('displayGameTitle').textContent = appData.gameTitle; document.getElementById('displayPhotoWrong').src = convertDriveLink(appData.photoWrong); document.getElementById('displayPhotoCorrect').src = convertDriveLink(appData.photoCorrect);
+            document.getElementById('dispMenuLoveImg').src = convertDriveLink(appData.menuLoveImg); document.getElementById('dispMenuBouquetImg').src = convertDriveLink(appData.menuBouquetImg); document.getElementById('dispMenuAlbumImg').src = convertDriveLink(appData.menuAlbumImg);
+            document.getElementById('displayLoveMsg').textContent = appData.loveMsg; document.getElementById('displayBouquetDetailImg').src = convertDriveLink(appData.bouquetImg); document.getElementById('displayBouquetMsg').textContent = appData.bouquetMsg;
+            for(let i=1; i<=6; i++) document.getElementById(`dispAlb${i}`).src = convertDriveLink(appData[`album${i}`]);
+        }
 
+        // --- GLOBAL FUNCTIONS MAP ---
         window.saveSettings = async function() {
-            window.appData = {
-                pin: document.getElementById('inputPin').value || window.defaultData.pin,
-                wrongPinMsg: document.getElementById('inputWrongPinMsg').value || window.defaultData.wrongPinMsg,
-                music: document.getElementById('inputMusic').value || window.defaultData.music,
-                photo: document.getElementById('inputPhoto').value || window.defaultData.photo,
-                title: document.getElementById('inputTitle').value || window.defaultData.title,
-                message: document.getElementById('inputMessage').value || window.defaultData.message,
-                gameTitle: document.getElementById('inputGameTitle').value || window.defaultData.gameTitle,
-                photoWrong: document.getElementById('inputPhotoWrong').value || window.defaultData.photoWrong,
-                msgWrong: document.getElementById('inputMsgWrong').value || window.defaultData.msgWrong,
-                photoCorrect: document.getElementById('inputPhotoCorrect').value || window.defaultData.photoCorrect,
-                msgCorrect: document.getElementById('inputMsgCorrect').value || window.defaultData.msgCorrect,
-                menuLoveImg: document.getElementById('inputMenuLoveImg').value || window.defaultData.menuLoveImg,
-                menuBouquetImg: document.getElementById('inputMenuBouquetImg').value || window.defaultData.menuBouquetImg,
-                menuAlbumImg: document.getElementById('inputMenuAlbumImg').value || window.defaultData.menuAlbumImg,
-                loveMsg: document.getElementById('inputLoveMsg').value || window.defaultData.loveMsg,
-                bouquetImg: document.getElementById('inputBouquetImg').value || window.defaultData.bouquetImg,
-                bouquetMsg: document.getElementById('inputBouquetMsg').value || window.defaultData.bouquetMsg,
-                waNumber: document.getElementById('inputWaNumber').value || window.defaultData.waNumber
-            };
-
-            for(let i=1; i<=6; i++) {
-                window.appData[`album${i}`] = document.getElementById(`inputAlbum${i}`).value || window.defaultData[`album${i}`];
-            }
-
-            window.applySettings();
-            window.toggleSettings();
+            const btn = document.getElementById('btnSaveSetting');
+            btn.innerHTML = 'Menyimpan... ⏳';
             
-            // Simpan ke cloud
-            if (window.isFirebaseReady && window.currentUser && window.setDoc && window.doc) {
-                try {
-                    window.showCustomAlert('⏳', 'Menyimpan...', 'Tunggu sebentar ya...', 'Ok');
-                    const btnContainer = document.getElementById('alertBtnText').parentElement;
-                    btnContainer.style.display = 'none'; // Sembunyikan tombol
-                    
-                    const docRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'config');
-                    await window.setDoc(docRef, window.appData);
-                    
-                    btnContainer.style.display = 'block'; // Tampilkan lagi
-                    window.showCustomAlert('☁️', 'Tersimpan!', 'Pengaturan berhasil diunggah ke Cloud. Pacar kamu akan langsung melihat perubahannya!', 'OK');
-                } catch (error) {
-                    console.error("Gagal menyimpan ke cloud:", error);
-                    window.showCustomAlert('❌', 'Gagal', 'Terjadi kesalahan jaringan.', 'Tutup');
-                    window.saveSettingsLocal();
-                }
+            appData = {
+                pin: document.getElementById('inputPin').value || defaultData.pin, wrongPinMsg: document.getElementById('inputWrongPinMsg').value || defaultData.wrongPinMsg, music: document.getElementById('inputMusic').value || defaultData.music, photo: document.getElementById('inputPhoto').value || defaultData.photo, title: document.getElementById('inputTitle').value || defaultData.title, message: document.getElementById('inputMessage').value || defaultData.message,
+                gameTitle: document.getElementById('inputGameTitle').value || defaultData.gameTitle, photoWrong: document.getElementById('inputPhotoWrong').value || defaultData.photoWrong, msgWrong: document.getElementById('inputMsgWrong').value || defaultData.msgWrong, photoCorrect: document.getElementById('inputPhotoCorrect').value || defaultData.photoCorrect, msgCorrect: document.getElementById('inputMsgCorrect').value || defaultData.msgCorrect,
+                menuLoveImg: document.getElementById('inputMenuLoveImg').value || defaultData.menuLoveImg, menuBouquetImg: document.getElementById('inputMenuBouquetImg').value || defaultData.menuBouquetImg, menuAlbumImg: document.getElementById('inputMenuAlbumImg').value || defaultData.menuAlbumImg,
+                loveMsg: document.getElementById('inputLoveMsg').value || defaultData.loveMsg, bouquetImg: document.getElementById('inputBouquetImg').value || defaultData.bouquetImg, bouquetMsg: document.getElementById('inputBouquetMsg').value || defaultData.bouquetMsg, waNumber: document.getElementById('inputWaNumber').value || defaultData.waNumber
+            };
+            for(let i=1; i<=6; i++) appData[`album${i}`] = document.getElementById(`inputAlbum${i}`).value || defaultData[`album${i}`];
+
+            applySettings();
+            
+            if (window.isFirebaseReady && window.saveToCloudFn) {
+                await window.saveToCloudFn(appData);
             } else {
-                window.saveSettingsLocal();
+                localStorage.setItem('bdPremiumV7', JSON.stringify(appData));
+                showCustomAlert('💾', 'Tersimpan Lokal', 'Data disimpan di peramban ini.', 'OK');
             }
+
+            btn.innerHTML = 'Simpan Publik';
+            toggleSettings();
             
             const audio = document.getElementById('bgMusic');
-            if (document.getElementById('startScreen').classList.contains('hidden-page') && 
-                document.getElementById('lockScreen').classList.contains('hidden-page')) {
-                audio.play().catch(e => console.log(e));
+            if (document.getElementById('startScreen').classList.contains('hidden-page') && document.getElementById('lockScreen').classList.contains('hidden-page')) {
+                audio.play().catch(e=>console.log(e));
             }
-        };
-
-        window.loadSettingsLocal = function() {
-            const savedData = localStorage.getItem('birthdayPremiumDataV6');
-            window.appData = savedData ? { ...window.defaultData, ...JSON.parse(savedData) } : { ...window.defaultData };
-            window.populateForm();
-            window.applySettings();
-        };
-
-        window.saveSettingsLocal = function() {
-            localStorage.setItem('birthdayPremiumDataV6', JSON.stringify(window.appData));
-            window.showCustomAlert('💾', 'Tersimpan Lokal!', 'Data disimpan di peramban ini (Firebase Cloud tidak tersedia).', 'Tutup');
         };
 
         window.resetSettings = function() {
-            window.appData = { ...window.defaultData };
-            window.populateForm();
-            window.applySettings();
-            window.showCustomAlert('🔄', 'Reset', 'Pengaturan kembali ke awal. Jangan lupa klik Simpan untuk memperbarui server.', 'OK');
+            appData = { ...defaultData };
+            populateForm(); applySettings();
+            showCustomAlert('🔄', 'Reset', 'Dikembalikan ke pengaturan pabrik. Silakan klik Simpan Publik.', 'OK');
         };
 
-        window.toggleSettings = function() {
-            document.getElementById('settingsPanel').classList.toggle('translate-x-full');
-        };
+        window.toggleSettings = () => document.getElementById('settingsPanel').classList.toggle('translate-x-full');
 
-        // --- SISTEM PIN ---
         window.addPin = function(num) {
-            if (window.currentPin.length < window.MAX_PIN_LENGTH) {
-                window.currentPin += num;
-                window.updatePinDots();
-                if (window.currentPin.length === window.MAX_PIN_LENGTH) setTimeout(window.validatePin, 200);
+            if (currentPin.length < MAX_PIN_LENGTH) {
+                currentPin += num;
+                updatePinDots();
+                if (currentPin.length === MAX_PIN_LENGTH) setTimeout(validatePin, 200);
             }
         };
-
         window.deletePin = function() {
-            if (window.currentPin.length > 0) {
-                window.currentPin = window.currentPin.slice(0, -1);
-                window.updatePinDots();
+            if (currentPin.length > 0) {
+                currentPin = currentPin.slice(0, -1); updatePinDots();
             }
         };
-
-        window.updatePinDots = function() {
+        function updatePinDots() {
             const dots = document.querySelectorAll('.pin-dot');
-            dots.forEach((dot, index) => {
-                if (index < window.currentPin.length) {
-                    dot.classList.add('bg-[#d9777f]');
-                    dot.classList.remove('bg-transparent');
+            dots.forEach((dot, idx) => {
+                if (index < currentPin.length) {
+                    dot.classList.add('bg-custom-rose'); dot.classList.remove('bg-transparent');
                 } else {
-                    dot.classList.remove('bg-[#d9777f]');
-                    dot.classList.add('bg-transparent');
+                    dot.classList.remove('bg-custom-rose'); dot.classList.add('bg-transparent');
                 }
             });
-        };
-
-        window.validatePin = function() {
-            if (window.currentPin === window.appData.pin) {
-                window.switchScreen('lockScreen', 'startScreen');
-            } else {
-                window.showCustomAlert('🤪', 'Oops!', window.appData.wrongPinMsg, 'Ulangi');
-                window.currentPin = '';
-                window.updatePinDots();
+        }
+        function validatePin() {
+            if (currentPin === appData.pin) switchScreen('lockScreen', 'startScreen');
+            else {
+                showCustomAlert('🤪', 'Oops!', appData.wrongPinMsg, 'Ulangi');
+                currentPin = ''; updatePinDots();
             }
-        };
+        }
 
-        // --- NAVIGASI ---
         window.switchScreen = function(fromId, toId) {
             document.getElementById(fromId).classList.replace('visible-page', 'hidden-page');
             document.getElementById(toId).classList.replace('hidden-page', 'visible-page');
-            if (toId === 'menuScreen') {
-                window.checkWaUnlock();
-            }
+            if (toId === 'menuScreen') checkWaUnlock();
         };
 
         window.openSurprise = function() {
-            window.switchScreen('startScreen', 'mainContent');
-            document.getElementById('bgMusic').play().catch(e => console.log(e));
-            window.createHearts();
+            switchScreen('startScreen', 'mainContent');
+            document.getElementById('bgMusic').play().catch(e=>console.log(e));
+            createHearts();
         };
 
         window.openMenuDetail = function(menuName, screenId) {
-            window.menuStatus[menuName] = true;
-            window.switchScreen('menuScreen', screenId);
+            menuStatus[menuName] = true; switchScreen('menuScreen', screenId);
         };
 
-        // --- SYSTEM WHATSAPP ---
-        window.checkWaUnlock = function() {
-            if (window.menuStatus.love && window.menuStatus.bouquet && window.menuStatus.album) {
+        function checkWaUnlock() {
+            if (menuStatus.love && menuStatus.bouquet && menuStatus.album) {
                 const waBtn = document.getElementById('waButton');
-                if (waBtn.classList.contains('bg-gray-300')) {
-                    waBtn.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
-                    waBtn.classList.add('btn-primary', 'cursor-pointer');
-                    waBtn.innerHTML = 'Kirim Pesan <i class="fas fa-heart ml-3 text-white animate-pulse"></i>';
-                }
+                waBtn.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+                waBtn.classList.add('btn-primary', 'cursor-pointer');
+                waBtn.innerHTML = 'Kirim Pesan <i class="fas fa-heart ml-3 text-white animate-pulse"></i>';
             }
-        };
+        }
 
         window.openWaModal = function() {
-            if (!window.menuStatus.love || !window.menuStatus.bouquet || !window.menuStatus.album) return;
-            const waModal = document.getElementById('waModal');
-            waModal.classList.remove('opacity-0', 'pointer-events-none');
+            if (!menuStatus.love || !menuStatus.bouquet || !menuStatus.album) return;
+            document.getElementById('waModal').classList.remove('opacity-0', 'pointer-events-none');
         };
-
-        window.closeWaModal = function() {
-            const waModal = document.getElementById('waModal');
-            waModal.classList.add('opacity-0', 'pointer-events-none');
-        };
+        window.closeWaModal = () => document.getElementById('waModal').classList.add('opacity-0', 'pointer-events-none');
 
         window.sendDynamicWhatsApp = function() {
             const userMsg = document.getElementById('userWaMessage').value;
             if (!userMsg.trim()) {
-                window.showCustomAlert('⚠️', 'Hei...', 'Isi pesannya dulu ya sayang ❤️', 'Tutup');
+                showCustomAlert('⚠️', 'Hei...', 'Isi pesannya dulu ya sayang ❤️', 'Tutup');
                 return;
             }
-
-            const phoneNumber = window.appData.waNumber.replace(/\D/g, ''); 
-            const textMessage = encodeURIComponent(userMsg);
-            window.open(`https://wa.me/${phoneNumber}?text=${textMessage}`, '_blank');
+            const phoneNumber = appData.waNumber.replace(/\D/g, ''); 
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(userMsg)}`, '_blank');
         };
 
         window.moveBtn = function(btn, containerId) {
             const container = document.getElementById(containerId);
             if (!container) return;
             if (btn.style.position !== 'absolute') btn.style.position = 'absolute';
-            const maxX = container.offsetWidth - btn.offsetWidth - 20;
-            const maxY = container.offsetHeight - btn.offsetHeight - 20;
-            const newX = Math.max(20, Math.floor(Math.random() * maxX));
-            const newY = Math.max(20, Math.floor(Math.random() * maxY));
-            btn.style.left = `${newX}px`;
-            btn.style.top = `${newY}px`;
+            const newX = Math.max(20, Math.floor(Math.random() * (container.offsetWidth - btn.offsetWidth - 20)));
+            const newY = Math.max(20, Math.floor(Math.random() * (container.offsetHeight - btn.offsetHeight - 20)));
+            btn.style.left = `${newX}px`; btn.style.top = `${newY}px`;
         };
 
-        // --- GAME ACTIONS ---
-        window.handleWrong = function() {
-            window.showCustomAlert('🙈', 'Tetot!', window.appData.msgWrong, 'Kembali');
-        };
-
+        window.handleWrong = () => showCustomAlert('🙈', 'Tetot!', appData.msgWrong, 'Kembali');
+        
         window.handleCorrect = function() {
+            // Memicu tombol Next Lanjut saat ditekan benar
+            showCustomAlert('🥰', 'Yeay!', appData.msgCorrect, 'Lanjut 🤍', function() {
+                closeAlert(); switchScreen('gameScreen', 'menuScreen');
+            });
+        };
+
+        window.showCustomAlert = function(emoji, title, message, btnText, callbackAction) {
             const alertBox = document.getElementById('customAlert');
             const alertContent = document.getElementById('customAlertContent');
+            document.getElementById('alertEmoji').textContent = emoji; document.getElementById('alertTitle').textContent = title; document.getElementById('alertMessage').textContent = message;
             
-            document.getElementById('alertEmoji').textContent = '🥰';
-            document.getElementById('alertTitle').textContent = 'Yeay!';
-            document.getElementById('alertMessage').textContent = window.appData.msgCorrect;
-            
-            const btnContainer = document.getElementById('alertBtnText').parentElement;
-            btnContainer.innerHTML = 'Lanjut <i class="fas fa-arrow-right ml-2"></i>';
-            btnContainer.onclick = function() {
-                window.closeAlert();
-                window.switchScreen('gameScreen', 'menuScreen');
-                
-                // Kembalikan ke fungsi asal
-                setTimeout(() => {
-                    btnContainer.innerHTML = '<span id="alertBtnText">Tutup</span>';
-                    btnContainer.onclick = window.closeAlert;
-                }, 500);
+            const btn = document.getElementById('alertBtn');
+            btn.innerHTML = btnText;
+            btn.onclick = function() {
+                if (typeof callbackAction === 'function') callbackAction();
+                else closeAlert();
             };
 
             alertBox.classList.remove('opacity-0', 'pointer-events-none');
             alertContent.classList.replace('scale-95', 'scale-100');
         };
 
-        // --- POP-UP ---
-        window.showCustomAlert = function(emoji, title, message, btnText) {
-            const alertBox = document.getElementById('customAlert');
-            const alertContent = document.getElementById('customAlertContent');
-            document.getElementById('alertEmoji').textContent = emoji;
-            document.getElementById('alertTitle').textContent = title;
-            document.getElementById('alertMessage').textContent = message;
-            
-            const btnContainer = document.getElementById('alertBtnText').parentElement;
-            btnContainer.innerHTML = `<span id="alertBtnText">${btnText}</span>`;
-            btnContainer.onclick = window.closeAlert;
-
-            alertBox.classList.remove('opacity-0', 'pointer-events-none');
-            alertContent.classList.replace('scale-95', 'scale-100');
-        };
-
         window.closeAlert = function() {
-            const alertBox = document.getElementById('customAlert');
-            const alertContent = document.getElementById('customAlertContent');
-            alertBox.classList.add('opacity-0', 'pointer-events-none');
-            alertContent.classList.replace('scale-100', 'scale-95');
+            document.getElementById('customAlert').classList.add('opacity-0', 'pointer-events-none');
+            document.getElementById('customAlertContent').classList.replace('scale-100', 'scale-95');
         };
 
-        window.createHearts = function() {
+        function createHearts() {
             const container = document.getElementById('hearts-container');
             setInterval(() => {
                 if(document.visibilityState !== 'visible') return; 
@@ -909,67 +640,61 @@
                 container.appendChild(heart);
                 setTimeout(() => heart.remove(), 10000);
             }, 500);
+        }
+
+        // Jalankan Default / Local Pertama Kali
+        const savedData = localStorage.getItem('bdPremiumV7');
+        if (savedData) appData = { ...defaultData, ...JSON.parse(savedData) };
+        populateForm(); applySettings();
+        
+        // Expose to window for Firebase
+        window.appDataStore = appData;
+        window.updateAppData = function(newData) {
+            appData = { ...defaultData, ...newData };
+            populateForm(); applySettings();
         };
     </script>
 
-    <!-- FIREBASE CLOUD INITIALIZATION (DYNAMIC IMPORTS) -->
+    <!-- FIREBASE CLOUD REAL-TIME -->
     <script type="module">
-        window.onload = async () => {
-            // Pertama muat dari lokal agar web instan tidak putih/blank
-            window.loadSettingsLocal();
+        if (typeof __firebase_config !== 'undefined') {
+            import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js").then(({ initializeApp }) => {
+                import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js").then(({ getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged }) => {
+                    import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js").then(({ getFirestore, doc, setDoc, onSnapshot }) => {
+                        
+                        const app = initializeApp(JSON.parse(__firebase_config));
+                        const auth = getAuth(app);
+                        const db = getFirestore(app);
+                        const appId = typeof __app_id !== 'undefined' ? __app_id : 'birthday-app';
+                        const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'config');
 
-            // Coba panggil Firebase jika variabel environment Immersive tersedia
-            if (typeof __firebase_config !== 'undefined') {
-                try {
-                    const { initializeApp } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js");
-                    const { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js");
-                    const { getFirestore, doc, setDoc, getDoc, onSnapshot } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js");
-                    
-                    const firebaseConfig = JSON.parse(__firebase_config);
-                    const app = initializeApp(firebaseConfig);
-                    window.auth = getAuth(app);
-                    window.db = getFirestore(app);
-                    
-                    // Ekspor module Firestore ke global (window)
-                    window.doc = doc;
-                    window.setDoc = setDoc;
-                    window.getDoc = getDoc;
-                    window.onSnapshot = onSnapshot;
+                        const initAuth = async () => {
+                            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) await signInWithCustomToken(auth, __initial_auth_token);
+                            else await signInAnonymously(auth);
+                        };
+                        initAuth();
 
-                    // Auth Real-Time Guard
-                    const initAuth = async () => {
-                        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                            await signInWithCustomToken(window.auth, __initial_auth_token);
-                        } else {
-                            await signInAnonymously(window.auth);
-                        }
-                    };
-                    await initAuth();
-
-                    onAuthStateChanged(window.auth, (user) => {
-                        if (user) {
-                            window.currentUser = user;
-                            window.isFirebaseReady = true;
-                            
-                            // Pasang pendengar Real-Time dari Server!
-                            const docRef = window.doc(window.db, 'artifacts', window.appId, 'public', 'data', 'config');
-                            window.onSnapshot(docRef, (docSnap) => {
-                                if (docSnap.exists()) {
-                                    window.appData = { ...window.defaultData, ...docSnap.data() };
-                                } else {
-                                    window.appData = { ...window.defaultData };
-                                }
-                                window.populateForm();
-                                window.applySettings();
-                            });
-                        }
+                        onAuthStateChanged(auth, (user) => {
+                            if (user) {
+                                window.isFirebaseReady = true;
+                                window.saveToCloudFn = async (data) => {
+                                    try {
+                                        await setDoc(docRef, data);
+                                        window.showCustomAlert('☁️', 'Tersimpan!', 'Perubahan sudah Online & Publik. Pacarmu akan melihatnya.', 'OK');
+                                    } catch (e) {
+                                        console.log(e); window.showCustomAlert('❌', 'Gagal', 'Terjadi kesalahan internet.', 'Tutup');
+                                    }
+                                };
+                                // Listen real-time
+                                onSnapshot(docRef, (docSnap) => {
+                                    if (docSnap.exists()) window.updateAppData(docSnap.data());
+                                });
+                            }
+                        });
                     });
-
-                } catch (e) {
-                    console.error("Gagal terhubung ke Cloud Database:", e);
-                }
-            }
-        };
+                });
+            });
+        }
     </script>
 </body>
 </html>
