@@ -532,7 +532,7 @@
         function updatePinDots() {
             const dots = document.querySelectorAll('.pin-dot');
             dots.forEach((dot, idx) => {
-                if (index < currentPin.length) {
+                if (idx < currentPin.length) {
                     dot.classList.add('bg-custom-rose'); dot.classList.remove('bg-transparent');
                 } else {
                     dot.classList.remove('bg-custom-rose'); dot.classList.add('bg-transparent');
