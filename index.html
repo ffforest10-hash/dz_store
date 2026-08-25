@@ -109,6 +109,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
+            z-index: -1;
         }
         .visible-page {
             opacity: 1;
@@ -143,6 +144,12 @@
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #d9777f; border-radius: 10px; }
+        
+        /* Utility z-index untuk memastikan button bisa diklik */
+        .click-safe {
+            position: relative;
+            z-index: 50 !important;
+        }
     </style>
 </head>
 <body>
@@ -156,7 +163,7 @@
     <div id="hearts-container" class="fixed inset-0 pointer-events-none overflow-hidden z-[5]"></div>
 
     <!-- Tombol Pengaturan -->
-    <button onclick="toggleSettings()" class="fixed top-6 right-6 z-[100] glass-btn text-custom-rose w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110">
+    <button onclick="toggleSettings()" class="fixed top-6 right-6 z-[100] glass-btn text-custom-rose w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 click-safe">
         <i class="fas fa-sliders-h text-lg"></i>
     </button>
 
@@ -290,17 +297,17 @@
             <div class="pin-dot w-3.5 h-3.5 rounded-full border border-custom-rose bg-transparent transition-colors"></div>
             <div class="pin-dot w-3.5 h-3.5 rounded-full border border-custom-rose bg-transparent transition-colors"></div>
         </div>
-        <!-- Numpad -->
-        <div class="grid grid-cols-3 gap-x-10 gap-y-6 max-w-[300px] mx-auto pb-10">
+        <!-- Numpad (Diberi class click-safe agar selalu di atas) -->
+        <div class="grid grid-cols-3 gap-x-10 gap-y-6 max-w-[300px] mx-auto pb-10 click-safe">
             <button onclick="addPin('1')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light">1</button>
-            <button onclick="addPin('2')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">2<span class="text-[9px] tracking-widest text-gray-400 mt-1">ABC</span></button>
-            <button onclick="addPin('3')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">3<span class="text-[9px] tracking-widest text-gray-400 mt-1">DEF</span></button>
-            <button onclick="addPin('4')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">4<span class="text-[9px] tracking-widest text-gray-400 mt-1">GHI</span></button>
-            <button onclick="addPin('5')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">5<span class="text-[9px] tracking-widest text-gray-400 mt-1">JKL</span></button>
-            <button onclick="addPin('6')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">6<span class="text-[9px] tracking-widest text-gray-400 mt-1">MNO</span></button>
-            <button onclick="addPin('7')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">7<span class="text-[9px] tracking-widest text-gray-400 mt-1">PQRS</span></button>
-            <button onclick="addPin('8')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">8<span class="text-[9px] tracking-widest text-gray-400 mt-1">TUV</span></button>
-            <button onclick="addPin('9')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">9<span class="text-[9px] tracking-widest text-gray-400 mt-1">WXYZ</span></button>
+            <button onclick="addPin('2')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">2<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">ABC</span></button>
+            <button onclick="addPin('3')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">3<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">DEF</span></button>
+            <button onclick="addPin('4')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">4<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">GHI</span></button>
+            <button onclick="addPin('5')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">5<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">JKL</span></button>
+            <button onclick="addPin('6')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">6<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">MNO</span></button>
+            <button onclick="addPin('7')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">7<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">PQRS</span></button>
+            <button onclick="addPin('8')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">8<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">TUV</span></button>
+            <button onclick="addPin('9')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">9<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">WXYZ</span></button>
             <div></div>
             <button onclick="addPin('0')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light">0</button>
             <button onclick="deletePin()" class="w-20 h-20 rounded-full bg-transparent text-gray-400 text-2xl flex items-center justify-center hover:text-custom-rose transition-colors"><i class="fas fa-backspace"></i></button>
@@ -308,8 +315,8 @@
     </div>
 
     <!-- SCREEN 2: Layar Kado -->
-    <div id="startScreen" class="flex flex-col items-center justify-center page-transition hidden-page">
-        <div class="text-center cursor-pointer glass p-12 rounded-[3rem] hover:scale-105 transition-transform duration-500" onclick="openSurprise()">
+    <div id="startScreen" class="flex flex-col items-center justify-center page-transition hidden-page z-20">
+        <div class="text-center cursor-pointer glass p-12 rounded-[3rem] hover:scale-105 transition-transform duration-500 click-safe" onclick="openSurprise()">
             <div class="relative w-40 h-40 mx-auto mb-8 flex justify-center items-center">
                 <i class="fas fa-gift text-[8rem] text-custom-rose drop-shadow-lg hover:rotate-3 transition-transform duration-300"></i>
             </div>
@@ -319,8 +326,8 @@
     </div>
 
     <!-- SCREEN 3: Halaman Utama -->
-    <div id="mainContent" class="flex flex-col items-center justify-center p-6 page-transition hidden-page">
-        <div class="glass p-8 md:p-12 rounded-[3rem] max-w-xl w-full text-center relative z-10 my-auto">
+    <div id="mainContent" class="flex flex-col items-center justify-center p-6 page-transition hidden-page z-20">
+        <div class="glass p-8 md:p-12 rounded-[3rem] max-w-xl w-full text-center relative my-auto">
             <div class="relative w-44 h-44 mx-auto mb-8 group">
                 <div class="absolute inset-0 bg-custom-rose rounded-full blur-xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
                 <img id="displayPhoto" src="" alt="Foto Utama" class="relative w-full h-full object-cover rounded-full border-[6px] border-white shadow-xl transition-transform group-hover:scale-105">
@@ -329,7 +336,7 @@
             <div class="bg-white/60 p-6 rounded-3xl border border-white shadow-sm mb-10">
                 <p id="displayMessage" class="text-gray-600 font-medium text-[15px] md:text-base leading-loose whitespace-pre-line text-left">Pesan memuat...</p>
             </div>
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4 relative min-h-[60px]">
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4 relative min-h-[60px] click-safe">
                 <button class="runaway-btn glass-btn text-gray-500 font-semibold py-3.5 px-8 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase" onmouseover="moveBtn(this, 'mainContent')" ontouchstart="moveBtn(this, 'mainContent')">Quit</button>
                 <button onclick="switchScreen('mainContent', 'gameScreen')" class="btn-primary py-3.5 px-10 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase font-semibold flex justify-center items-center z-10">Lanjut <i class="fas fa-chevron-right ml-3 text-xs"></i></button>
             </div>
@@ -342,7 +349,7 @@
             <h1 id="displayGameTitle" class="lux-font italic text-3xl text-custom-rose mb-3">Tebak Game</h1>
             <p class="text-gray-400 font-medium mb-10 text-sm">Pilih dengan hatimu... 👀</p>
             
-            <div class="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-12 mb-6">
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-12 mb-6 click-safe">
                 <!-- Foto Kiri Salah -->
                 <div class="cursor-pointer group flex flex-col items-center" onclick="handleWrong()">
                     <div class="relative w-40 h-40 mb-3">
@@ -362,10 +369,10 @@
     </div>
 
     <!-- SCREEN 5: Menu Kotak -->
-    <div id="menuScreen" class="flex flex-col items-center justify-center p-6 page-transition hidden-page">
+    <div id="menuScreen" class="flex flex-col items-center justify-center p-6 page-transition hidden-page z-20">
         <div class="text-center z-10 w-full max-w-5xl">
             <h1 class="lux-font italic font-semibold text-3xl md:text-5xl text-[#c9666e] mb-12 drop-shadow-sm">The Special Boxes</h1>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 px-2 mb-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 px-2 mb-10 click-safe">
                 <div onclick="openMenuDetail('love', 'loveScreen')" class="glass bg-white/70 p-8 rounded-[2.5rem] cursor-pointer hover:-translate-y-2 transition-all duration-300 flex flex-col items-center group">
                     <div class="relative w-32 h-32 mb-6 rounded-full overflow-hidden border-[6px] border-white shadow-md group-hover:shadow-xl transition-shadow"><img id="dispMenuLoveImg" src="" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"></div>
                     <h2 class="text-2xl font-semibold text-gray-800 mb-2 lux-font italic">Love</h2>
@@ -382,7 +389,7 @@
                     <p class="text-gray-400 text-sm font-medium">Galeri kita</p>
                 </div>
             </div>
-            <button id="waButton" class="bg-gray-300 text-gray-500 cursor-not-allowed font-semibold py-4 px-10 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase transition-all duration-500 shadow-md flex justify-center items-center mx-auto" onclick="openWaModal()">
+            <button id="waButton" class="bg-gray-300 text-gray-500 cursor-not-allowed font-semibold py-4 px-10 rounded-full w-full sm:w-auto text-sm tracking-wider uppercase transition-all duration-500 shadow-md flex justify-center items-center mx-auto click-safe" onclick="openWaModal()">
                 Buka 3 kotak dulu ya... <i class="fas fa-lock ml-3"></i>
             </button>
         </div>
@@ -390,7 +397,7 @@
 
     <!-- SCREEN 6: LOVE -->
     <div id="loveScreen" class="flex items-center justify-center p-6 page-transition hidden-page z-20">
-        <button onclick="switchScreen('loveScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-custom-rose text-lg"><i class="fas fa-arrow-left"></i></button>
+        <button onclick="switchScreen('loveScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-custom-rose text-lg click-safe"><i class="fas fa-arrow-left"></i></button>
         <div class="glass-panel p-10 md:p-16 rounded-[3rem] max-w-2xl w-full text-center relative border border-white">
             <i class="fas fa-envelope-open-text text-4xl text-custom-rose mb-6 opacity-80"></i>
             <h1 class="lux-font italic text-3xl md:text-4xl text-gray-800 mb-8">Letter of Love</h1>
@@ -400,7 +407,7 @@
 
     <!-- SCREEN 7: BUKET -->
     <div id="bouquetScreen" class="flex items-center justify-center p-6 md:p-10 page-transition hidden-page z-20">
-        <button onclick="switchScreen('bouquetScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-custom-rose text-lg"><i class="fas fa-arrow-left"></i></button>
+        <button onclick="switchScreen('bouquetScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-custom-rose text-lg click-safe"><i class="fas fa-arrow-left"></i></button>
         <div class="glass-panel p-8 md:p-12 rounded-[3rem] max-w-5xl w-full relative border border-white flex flex-col md:flex-row items-center gap-12">
             <div class="flex-1 text-center md:text-left order-2 md:order-1">
                 <h1 class="lux-font italic text-3xl md:text-4xl text-gray-800 mb-6">The Bouquet</h1>
@@ -416,12 +423,12 @@
 
     <!-- SCREEN 8: ALBUM -->
     <div id="albumScreen" class="flex flex-col p-6 md:p-10 page-transition hidden-page overflow-y-auto z-20">
-        <button onclick="switchScreen('albumScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-custom-rose text-lg"><i class="fas fa-arrow-left"></i></button>
+        <button onclick="switchScreen('albumScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-custom-rose text-lg click-safe"><i class="fas fa-arrow-left"></i></button>
         <div class="text-center z-10 mt-12 md:mt-4 mb-14 w-full">
             <h1 class="lux-font italic font-semibold text-3xl md:text-5xl text-gray-800 mb-4">Our Memories</h1>
             <p class="text-gray-400 font-medium tracking-widest uppercase text-xs">A collection of moments</p>
         </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 max-w-5xl mx-auto z-10 pb-20 w-full">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-6 md:gap-10 max-w-5xl mx-auto z-10 pb-20 w-full click-safe">
             <div class="polaroid" style="transform: rotate(-2deg) translateY(5px);"><img id="dispAlb1" src="" class="w-full h-44 md:h-64 object-cover mb-4"><p class="text-center lux-font italic text-gray-500">Moment I</p></div>
             <div class="polaroid" style="transform: rotate(2deg) translateY(-5px);"><img id="dispAlb2" src="" class="w-full h-44 md:h-64 object-cover mb-4"><p class="text-center lux-font italic text-gray-500">Moment II</p></div>
             <div class="polaroid" style="transform: rotate(-1deg) translateY(10px);"><img id="dispAlb3" src="" class="w-full h-44 md:h-64 object-cover mb-4"><p class="text-center lux-font italic text-gray-500">Moment III</p></div>
@@ -431,7 +438,7 @@
         </div>
     </div>
 
-    <!-- JS GLOBAL (Di luar module agar selalu terhubung ke HTML) -->
+    <!-- SCRIPT UTAMA (HARUS DI LUAR TYPE MODULE) -->
     <script>
         const defaultData = {
             pin: '04092007', wrongPinMsg: 'Passcode salah. Silakan coba lagi 🤪',
@@ -450,10 +457,6 @@
         let currentPin = '';
         const MAX_PIN_LENGTH = 8;
         let menuStatus = { love: false, bouquet: false, album: false };
-
-        // Variabel untuk bridge ke Firebase
-        window.isFirebaseReady = false;
-        window.saveToCloudFn = null;
 
         function convertDriveLink(url) {
             if (!url) return '';
