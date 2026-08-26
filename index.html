@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday Sayang!</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
     
     <style>
@@ -151,6 +154,7 @@
 </head>
 <body>
 
+    <!-- Soft Elegant Background Blobs -->
     <div class="blob bg-red-100 w-[500px] h-[500px] top-[-15%] left-[-10%] fixed pointer-events-none"></div>
     <div class="blob bg-rose-100 w-[600px] h-[600px] bottom-[-20%] right-[-15%] fixed pointer-events-none" style="animation-delay: -5s;"></div>
     <div class="blob bg-orange-50 w-[400px] h-[400px] top-[30%] left-[20%] fixed pointer-events-none" style="animation-delay: -7s;"></div>
@@ -158,10 +162,12 @@
     <audio id="bgMusic" loop><source src="" type="audio/mpeg"></audio>
     <div id="hearts-container" class="fixed inset-0 pointer-events-none overflow-hidden z-[5]"></div>
 
+    <!-- Tombol Pengaturan -->
     <button onclick="toggleSettings()" class="fixed top-6 right-6 z-[100] glass-btn text-custom-rose w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:scale-110 click-safe">
         <i class="fas fa-sliders-h text-lg"></i>
     </button>
 
+    <!-- Panel Pengaturan -->
     <div id="settingsPanel" class="fixed inset-y-0 right-0 w-full sm:w-[450px] glass-panel shadow-2xl z-[150] transform translate-x-full transition-transform duration-500 overflow-y-auto border-l border-white/80">
         <div class="p-8">
             <div class="flex justify-between items-center mb-8 border-b border-gray-200 pb-4">
@@ -170,6 +176,7 @@
             </div>
             
             <div class="space-y-4 text-sm pb-24 text-gray-600">
+                <!-- Keamanan -->
                 <details class="glass p-5 rounded-2xl cursor-pointer group">
                     <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fas fa-lock w-5 text-custom-rose mr-2"></i> Keamanan & Musik</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
                     <div class="mt-4 space-y-3 cursor-auto">
@@ -179,6 +186,7 @@
                     </div>
                 </details>
 
+                <!-- Ucapan Awal -->
                 <details class="glass p-5 rounded-2xl cursor-pointer group">
                     <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fas fa-envelope-open-text w-5 text-custom-rose mr-2"></i> Pesan Utama</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
                     <div class="mt-4 space-y-3 cursor-auto">
@@ -188,6 +196,7 @@
                     </div>
                 </details>
 
+                <!-- Game -->
                 <details class="glass p-5 rounded-2xl cursor-pointer group">
                     <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fas fa-heart w-5 text-custom-rose mr-2"></i> Game Pilihan</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
                     <div class="mt-4 space-y-3 cursor-auto">
@@ -201,6 +210,7 @@
                     </div>
                 </details>
 
+                <!-- 3 Menu Spesial -->
                 <details class="glass p-5 rounded-2xl cursor-pointer group" open>
                     <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fas fa-gift w-5 text-custom-rose mr-2"></i> 3 Kotak Spesial</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
                     <div class="mt-4 space-y-5 cursor-auto border-t border-gray-100 pt-4">
@@ -232,6 +242,7 @@
                     </div>
                 </details>
 
+                <!-- WhatsApp -->
                 <details class="glass p-5 rounded-2xl cursor-pointer group">
                     <summary class="font-semibold text-gray-700 flex justify-between items-center"><span class="flex items-center"><i class="fab fa-whatsapp w-5 text-custom-rose mr-2"></i> WhatsApp</span> <i class="fas fa-chevron-down text-gray-400 group-open:rotate-180 transition-transform"></i></summary>
                     <div class="mt-4 space-y-3 cursor-auto border-t border-gray-100 pt-4">
@@ -247,6 +258,7 @@
         </div>
     </div>
 
+    <!-- Modal Peringatan / Interaksi -->
     <div id="customAlert" class="fixed inset-0 z-[200] flex items-center justify-center bg-white/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
         <div id="customAlertContent" class="glass-panel p-10 rounded-3xl shadow-2xl text-center max-w-sm w-[90%] mx-4 transform scale-95 transition-transform duration-400 border border-white">
             <div id="alertEmoji" class="text-6xl mb-6">✨</div>
@@ -256,6 +268,7 @@
         </div>
     </div>
 
+    <!-- Modal WhatsApp -->
     <div id="waModal" class="fixed inset-0 z-[200] flex items-center justify-center bg-white/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
         <div class="glass-panel p-8 md:p-10 rounded-3xl shadow-2xl text-center max-w-sm w-[90%] mx-4 transform scale-95 transition-transform duration-400 border border-white relative">
             <button onclick="closeWaModal()" class="absolute top-4 right-4 text-gray-400 hover:text-custom-rose transition-colors"><i class="fas fa-times text-xl"></i></button>
@@ -267,6 +280,7 @@
         </div>
     </div>
 
+    <!-- SCREEN 1: Layar Kunci -->
     <div id="lockScreen" class="flex flex-col items-center justify-center page-transition visible-page z-20">
         <div class="text-center mb-8 mt-10">
             <i class="fas fa-lock text-3xl text-custom-rose mb-3 drop-shadow-md opacity-80"></i>
@@ -283,6 +297,7 @@
             <div class="pin-dot w-3.5 h-3.5 rounded-full border border-custom-rose bg-transparent transition-colors"></div>
             <div class="pin-dot w-3.5 h-3.5 rounded-full border border-custom-rose bg-transparent transition-colors"></div>
         </div>
+        <!-- Numpad -->
         <div class="grid grid-cols-3 gap-x-10 gap-y-6 max-w-[300px] mx-auto pb-10 click-safe">
             <button onclick="addPin('1')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light">1</button>
             <button onclick="addPin('2')" class="glass-btn w-20 h-20 rounded-full text-gray-700 text-4xl font-light flex flex-col justify-center items-center leading-none">2<span class="text-[9px] tracking-widest text-gray-400 mt-1 font-sans">ABC</span></button>
@@ -299,6 +314,7 @@
         </div>
     </div>
 
+    <!-- SCREEN 2: Layar Kado -->
     <div id="startScreen" class="flex flex-col items-center justify-center page-transition hidden-page z-20">
         <div class="text-center cursor-pointer glass p-12 rounded-[3rem] hover:scale-105 transition-transform duration-500 click-safe" onclick="openSurprise()">
             <div class="relative w-40 h-40 mx-auto mb-8 flex justify-center items-center">
@@ -309,6 +325,7 @@
         </div>
     </div>
 
+    <!-- SCREEN 3: Halaman Utama -->
     <div id="mainContent" class="flex flex-col items-center justify-center p-6 page-transition hidden-page z-20">
         <div class="glass p-8 md:p-12 rounded-[3rem] max-w-xl w-full text-center relative my-auto">
             <div class="relative w-44 h-44 mx-auto mb-8 group">
@@ -326,18 +343,21 @@
         </div>
     </div>
 
+    <!-- SCREEN 4: Game -->
     <div id="gameScreen" class="flex flex-col items-center justify-center p-6 page-transition hidden-page z-20">
         <div class="glass p-8 md:p-12 rounded-[3rem] max-w-2xl w-full text-center relative my-auto">
             <h1 id="displayGameTitle" class="lux-font italic text-3xl text-custom-rose mb-3">Tebak Game</h1>
             <p class="text-gray-400 font-medium mb-10 text-sm">Pilih dengan hatimu... 👀</p>
             
             <div class="flex flex-col sm:flex-row justify-center items-center gap-8 sm:gap-12 mb-6 click-safe">
+                <!-- Foto Kiri Salah -->
                 <div class="cursor-pointer group flex flex-col items-center" onclick="handleWrong()">
                     <div class="relative w-40 h-40 mb-3">
                         <img id="displayPhotoWrong" src="" class="w-full h-full object-cover rounded-full border-[4px] border-white shadow-lg group-hover:scale-105 transition-transform duration-300 opacity-90 group-hover:opacity-100 filter grayscale group-hover:grayscale-0">
                     </div>
                 </div>
                 <div class="text-custom-rose font-light text-2xl lux-font italic opacity-50">vs</div>
+                <!-- Foto Kanan Benar -->
                 <div class="cursor-pointer group flex flex-col items-center" onclick="handleCorrect()">
                     <div class="relative w-40 h-40 mb-3">
                         <img id="displayPhotoCorrect" src="" class="w-full h-full object-cover rounded-full border-[4px] border-white shadow-lg group-hover:scale-105 transition-transform duration-300">
@@ -348,6 +368,7 @@
         </div>
     </div>
 
+    <!-- SCREEN 5: Menu Kotak -->
     <div id="menuScreen" class="flex flex-col items-center justify-center p-6 page-transition hidden-page z-20">
         <div class="text-center z-10 w-full max-w-5xl">
             <h1 class="lux-font italic font-semibold text-3xl md:text-5xl text-[#c9666e] mb-12 drop-shadow-sm">The Special Boxes</h1>
@@ -374,6 +395,7 @@
         </div>
     </div>
 
+    <!-- SCREEN 6: LOVE -->
     <div id="loveScreen" class="flex items-center justify-center p-6 page-transition hidden-page z-20">
         <button onclick="switchScreen('loveScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-custom-rose text-lg click-safe"><i class="fas fa-arrow-left"></i></button>
         <div class="glass-panel p-10 md:p-16 rounded-[3rem] max-w-2xl w-full text-center relative border border-white">
@@ -383,6 +405,7 @@
         </div>
     </div>
 
+    <!-- SCREEN 7: BUKET -->
     <div id="bouquetScreen" class="flex items-center justify-center p-6 md:p-10 page-transition hidden-page z-20">
         <button onclick="switchScreen('bouquetScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-custom-rose text-lg click-safe"><i class="fas fa-arrow-left"></i></button>
         <div class="glass-panel p-8 md:p-12 rounded-[3rem] max-w-5xl w-full relative border border-white flex flex-col md:flex-row items-center gap-12">
@@ -398,6 +421,7 @@
         </div>
     </div>
 
+    <!-- SCREEN 8: ALBUM -->
     <div id="albumScreen" class="flex flex-col p-6 md:p-10 page-transition hidden-page overflow-y-auto z-20">
         <button onclick="switchScreen('albumScreen', 'menuScreen')" class="fixed top-8 left-8 z-[120] glass-btn w-12 h-12 rounded-full flex items-center justify-center text-gray-500 hover:text-custom-rose text-lg click-safe"><i class="fas fa-arrow-left"></i></button>
         <div class="text-center z-10 mt-12 md:mt-4 mb-14 w-full">
@@ -414,6 +438,7 @@
         </div>
     </div>
 
+    <!-- SCRIPT UTAMA UI -->
     <script>
         const defaultData = {
             pin: '04092007', wrongPinMsg: 'Passcode salah. Silakan coba lagi 🤪',
@@ -433,7 +458,6 @@
         const MAX_PIN_LENGTH = 8;
         let menuStatus = { love: false, bouquet: false, album: false };
 
-        // Variabel untuk bridge ke Firebase
         window.isFirebaseReady = false;
         window.saveToCloudFn = null;
 
@@ -460,7 +484,6 @@
             for(let i=1; i<=6; i++) document.getElementById(`dispAlb${i}`).src = convertDriveLink(appData[`album${i}`]);
         }
 
-        // --- GLOBAL FUNCTIONS MAP ---
         window.saveSettings = async function() {
             const btn = document.getElementById('btnSaveSetting');
             btn.innerHTML = 'Menyimpan... ⏳';
@@ -478,8 +501,8 @@
             if (window.isFirebaseReady && window.saveToCloudFn) {
                 await window.saveToCloudFn(appData);
             } else {
-                localStorage.setItem('bdPremiumV7', JSON.stringify(appData));
-                showCustomAlert('💾', 'Tersimpan Lokal', 'Data disimpan di peramban ini.', 'OK');
+                localStorage.setItem('bdPremiumGitHub', JSON.stringify(appData));
+                showCustomAlert('💾', 'Tersimpan Lokal', 'Data disimpan lokal sementara karena ada masalah dengan database Cloud. Cek pengaturan Authentication Anda.', 'OK');
             }
 
             btn.innerHTML = 'Simpan Publik';
@@ -582,7 +605,6 @@
         window.handleWrong = () => showCustomAlert('🙈', 'Tetot!', appData.msgWrong, 'Kembali');
         
         window.handleCorrect = function() {
-            // Memicu tombol Next Lanjut saat ditekan benar
             showCustomAlert('🥰', 'Yeay!', appData.msgCorrect, 'Lanjut 🤍', function() {
                 closeAlert(); switchScreen('gameScreen', 'menuScreen');
             });
@@ -624,22 +646,28 @@
             }, 500);
         }
 
-        // Jalankan Default / Local Pertama Kali
-        const savedData = localStorage.getItem('bdPremiumV7');
-        if (savedData) appData = { ...defaultData, ...JSON.parse(savedData) };
-        populateForm(); applySettings();
-        
-        // Expose to window for Firebase
-        window.appDataStore = appData;
         window.updateAppData = function(newData) {
             appData = { ...defaultData, ...newData };
             populateForm(); applySettings();
         };
+
+        // Pemuatan data sementara sebelum cloud masuk
+        const savedData = localStorage.getItem('bdPremiumGitHub');
+        if (savedData) {
+            window.updateAppData(JSON.parse(savedData));
+        } else {
+            populateForm(); applySettings();
+        }
     </script>
 
+    <!-- FIREBASE CLOUD REAL-TIME -->
     <script type="module">
-        // ==== PENTING: ISI CONFIG FIREBASE ANDA DI SINI ====
-        const myFirebaseConfig = {
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Konfigurasi Database Anda
+        const firebaseConfig = {
             apiKey: "AIzaSyC1x6w62zGlcFQ6ny4hsym2XHTMKZbyYLc",
             authDomain: "birthday-arbia.firebaseapp.com",
             projectId: "birthday-arbia",
@@ -649,62 +677,46 @@
             measurementId: "G-YKLZ6LDKPJ"
         };
 
-        // Cek apakah ditaruh di Immersive Environment atau pakai Config Sendiri
-        let activeConfig = null;
-        if (typeof __firebase_config !== 'undefined') {
-            activeConfig = JSON.parse(__firebase_config);
-        } else if (myFirebaseConfig !== null) {
-            activeConfig = myFirebaseConfig;
-        }
+        try {
+            const app = initializeApp(firebaseConfig);
+            const auth = getAuth(app);
+            const db = getFirestore(app);
+            
+            // Lokasi penyimpanan data di Firestore
+            const docRef = doc(db, "pengaturan_web", "data_utama");
 
-        if (activeConfig !== null) {
-            import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js").then(({ initializeApp }) => {
-                import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js").then(({ getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged }) => {
-                    import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js").then(({ getFirestore, doc, setDoc, onSnapshot }) => {
+            signInAnonymously(auth).then(() => {
+                onAuthStateChanged(auth, (user) => {
+                    if (user) {
+                        window.isFirebaseReady = true;
                         
-                        const app = initializeApp(activeConfig);
-                        const auth = getAuth(app);
-                        const db = getFirestore(app);
-                        
-                        // ID App Unik. Jika di Github, gunakan id statis seperti 'ultah-pacar'
-                        const appId = typeof __app_id !== 'undefined' ? __app_id : 'ultah-pacar-123';
-                        const docRef = doc(db, 'artifacts', appId, 'public', 'data');
-
-                        const initAuth = async () => {
-                            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                                await signInWithCustomToken(auth, __initial_auth_token);
-                            } else {
-                                await signInAnonymously(auth);
+                        // Fungsi simpan langsung ke cloud
+                        window.saveToCloudFn = async (data) => {
+                            try {
+                                await setDoc(docRef, data, { merge: true });
+                                window.showCustomAlert('☁️', 'Tersimpan!', 'Perubahan sudah tersimpan di server secara publik.', 'OK');
+                            } catch (e) {
+                                console.error("Firestore Error:", e);
+                                window.showCustomAlert('❌', 'Gagal Simpan', 'Data ditolak oleh database. Pastikan Rules Firestore sudah diset "allow read, write: if true;".', 'Tutup');
                             }
                         };
-                        initAuth();
-
-                        onAuthStateChanged(auth, (user) => {
-                            if (user) {
-                                window.isFirebaseReady = true;
-                                window.saveToCloudFn = async (data) => {
-                                    try {
-                                        await setDoc(docRef, data);
-                                        window.showCustomAlert('☁️', 'Tersimpan!', 'Perubahan sudah Online & Publik. Pacarmu akan melihatnya saat membuka link.', 'OK');
-                                    } catch (e) {
-                                        console.error("Firestore error:", e);
-                                        window.showCustomAlert('❌', 'Gagal', 'Pastikan database Firestore Anda sudah diatur ke mode test (allow read, write).', 'Tutup');
-                                    }
-                                };
-                                
-                                // Listen real-time: Otomatis memperbarui web saat ada data baru masuk
-                                onSnapshot(docRef, (docSnap) => {
-                                    if (docSnap.exists()) {
-                                        window.updateAppData(docSnap.data());
-                                    }
-                                });
+                        
+                        // Menarik data baru secara otomatis dan real-time
+                        onSnapshot(docRef, (docSnap) => {
+                            if (docSnap.exists()) {
+                                window.updateAppData(docSnap.data());
                             }
                         });
-                    }).catch(console.error);
-                }).catch(console.error);
-            }).catch(console.error);
-        } else {
-            console.log("Firebase tidak diaktifkan karena konfigurasi tidak ditemukan. Menggunakan penyimpanan lokal.");
+                    }
+                });
+            }).catch((error) => {
+                console.error("Gagal login Firebase:", error);
+                if(error.code === 'auth/configuration-not-found') {
+                    window.showCustomAlert('⚠️', 'Auth Belum Aktif', 'Koneksi ke database gagal. Anda belum mengaktifkan "Login Anonymous" di menu Authentication Firebase.', 'Tutup');
+                }
+            });
+        } catch (e) {
+            console.error("Gagal inisialisasi Firebase:", e);
         }
     </script>
 </body>
